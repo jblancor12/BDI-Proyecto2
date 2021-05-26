@@ -1,0 +1,45 @@
+CREATE TABLE `pe`.`person` (
+  `id_person` INT NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `birthday` DATE NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `username` VARCHAR(45) NULL,
+  `password` VARCHAR(45) NULL,
+  `id_person_type` INT NULL,
+  `creation_date` DATE NULL,
+  `creation_user` VARCHAR(45) NULL,
+  `date_last_mod` DATE NULL,
+  `user_last_mod` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_person`),
+  INDEX `id_person_type_idx` (`id_person_type` ASC) VISIBLE,
+  CONSTRAINT `id_person_type`
+    FOREIGN KEY (`id_person_type`)
+    REFERENCES `pe`.`person_type` (`id_person_type`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+COMMENT = 'Table to store people';
+DROP TRIGGER IF EXISTS `pe`.`person_BEFORE_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`person_BEFORE_UPDATE` BEFORE UPDATE ON `person` FOR EACH ROW
+BEGIN
+	IF NEW.date_last_mod IS NULL OR NEW.user_last_mod IS NULL THEN
+		SET NEW.date_last_mod = CURDATE();
+		SET NEW.user_last_mod = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`person_BEFORE_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`person_BEFORE_INSERT` BEFORE INSERT ON `person` FOR EACH ROW
+BEGIN
+	IF NEW.creation_date IS NULL OR NEW.creation_user IS NULL THEN 
+		SET NEW.creation_date = CURDATE();
+		SET NEW.creation_user = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;

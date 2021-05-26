@@ -1,0 +1,65 @@
+CREATE TABLE `pe`.`book` (
+  `id_book` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  `id_edition` INT NOT NULL,
+  `id_editorial` INT NOT NULL,
+  `id_calification` INT NULL,
+  `id_photo` INT NULL,
+  `creation_date` DATE NULL,
+  `creation_user` VARCHAR(45) NULL,
+  `date_last_mod` DATE NULL,
+  `user_last_mod` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_book`),
+  INDEX `id_calification_idx` (`id_calification` ASC) VISIBLE,
+  INDEX `id_editorial_idx` (`id_editorial` ASC) VISIBLE,
+  INDEX `id_edition_idx` (`id_edition` ASC) VISIBLE,
+  INDEX `id_photo_idx` (`id_photo` ASC) VISIBLE,
+  CONSTRAINT `id_calification`
+    FOREIGN KEY (`id_calification`)
+    REFERENCES `pe`.`calification` (`id_calification`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_editorial`
+    FOREIGN KEY (`id_editorial`)
+    REFERENCES `pe`.`editorial` (`id_editorial`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_edition`
+    FOREIGN KEY (`id_edition`)
+    REFERENCES `pe`.`edition` (`id_edition`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_photo`
+    FOREIGN KEY (`id_photo`)
+    REFERENCES `pe`.`photo` (`id_photo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+ALTER TABLE `pe`.`book` 
+COMMENT = 'Table for storing books.' ;
+
+
+DROP TRIGGER IF EXISTS `pe`.`book_BEFORE_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`book_BEFORE_INSERT` BEFORE INSERT ON `book` FOR EACH ROW
+BEGIN
+	IF NEW.creation_date IS NULL OR NEW.creation_user IS NULL THEN 
+		SET NEW.creation_date = CURDATE();
+		SET NEW.creation_user = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`book_BEFORE_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`book_BEFORE_UPDATE` BEFORE UPDATE ON `book` FOR EACH ROW
+BEGIN
+	IF NEW.date_last_mod IS NULL OR NEW.user_last_mod IS NULL THEN
+		SET NEW.date_last_mod = CURDATE();
+		SET NEW.user_last_mod = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;

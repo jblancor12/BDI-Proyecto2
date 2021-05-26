@@ -1,0 +1,33 @@
+CREATE TABLE `pe`.`calification` (
+  `id_calification` INT NOT NULL AUTO_INCREMENT,
+  `score` INT NOT NULL,
+  `creation_user` VARCHAR(45) NULL,
+  `creation_date` DATE NULL,
+  `user_last_mod` VARCHAR(45) NULL,
+  `date_last_mod` DATE NULL,
+  PRIMARY KEY (`id_calification`))
+COMMENT = 'Table for book scores.';
+DROP TRIGGER IF EXISTS `pe`.`calification_BEFORE_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`calification_BEFORE_INSERT` BEFORE INSERT ON `calification` FOR EACH ROW
+BEGIN
+	IF NEW.creation_date IS NULL OR NEW.creation_user IS NULL THEN 
+		SET NEW.creation_date = CURDATE();
+		SET NEW.creation_user = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`calification_BEFORE_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`calification_BEFORE_UPDATE` BEFORE UPDATE ON `calification` FOR EACH ROW
+BEGIN
+	IF NEW.date_last_mod IS NULL OR NEW.user_last_mod IS NULL THEN
+		SET NEW.date_last_mod = CURDATE();
+		SET NEW.user_last_mod = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;

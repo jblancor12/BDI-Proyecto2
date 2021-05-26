@@ -1,0 +1,44 @@
+CREATE TABLE `pe`.`personownsobject` (
+  `id_object` INT NOT NULL,
+  `id_person` INT NOT NULL,
+  `creation_date` DATE NULL,
+  `creation_user` VARCHAR(45) NULL,
+  `date_last_mod` DATE NULL,
+  `user_last_mod` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_object`, `id_person`),
+  INDEX `id_person_poo_idx` (`id_person` ASC) VISIBLE,
+  CONSTRAINT `id_object_poo`
+    FOREIGN KEY (`id_object`)
+    REFERENCES `pe`.`object` (`id_object`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_person_poo`
+    FOREIGN KEY (`id_person`)
+    REFERENCES `pe`.`person` (`id_person`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+COMMENT = 'Table that stores objects and people that own them';
+DROP TRIGGER IF EXISTS `pe`.`personownsobject_BEFORE_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`personownsobject_BEFORE_UPDATE` BEFORE UPDATE ON `personownsobject` FOR EACH ROW
+BEGIN
+	IF NEW.date_last_mod IS NULL OR NEW.user_last_mod IS NULL THEN
+		SET NEW.date_last_mod = CURDATE();
+		SET NEW.user_last_mod = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`personownsobject_BEFORE_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`personownsobject_BEFORE_INSERT` BEFORE INSERT ON `personownsobject` FOR EACH ROW
+BEGIN
+	IF NEW.creation_date IS NULL OR NEW.creation_user IS NULL THEN 
+		SET NEW.creation_date = CURDATE();
+		SET NEW.creation_user = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;

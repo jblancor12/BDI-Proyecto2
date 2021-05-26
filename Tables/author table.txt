@@ -1,0 +1,33 @@
+CREATE TABLE `pe`.`author` (
+  `id_author` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `creation_user` VARCHAR(45) NULL,
+  `creation_date` DATE NULL,
+  `date_last_mod` VARCHAR(45) NULL,
+  `user_last_mod` DATE NULL,
+  PRIMARY KEY (`id_author`))
+COMMENT = 'Table that stores information about book authors.';
+DROP TRIGGER IF EXISTS `pe`.`author_BEFORE_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`author_BEFORE_INSERT` BEFORE INSERT ON `author` FOR EACH ROW
+BEGIN
+	IF NEW.creation_date IS NULL OR NEW.creation_user IS NULL THEN 
+		SET NEW.creation_date = CURDATE();
+		SET NEW.creation_user = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`author_BEFORE_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`author_BEFORE_UPDATE` BEFORE UPDATE ON `author` FOR EACH ROW
+BEGIN
+		IF NEW.date_last_mod IS NULL OR NEW.user_last_mod IS NULL THEN
+			SET NEW.date_last_mod = CURDATE();
+			SET NEW.user_last_mod = SYSTEM_USER();
+		END IF;
+END$$
+DELIMITER ;

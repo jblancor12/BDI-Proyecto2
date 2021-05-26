@@ -1,0 +1,44 @@
+CREATE TABLE `pe`.`personownsbook` (
+  `id_book` INT NOT NULL,
+  `id_person` INT NOT NULL,
+  `creation_date` DATE NULL,
+  `creation_user` VARCHAR(45) NULL,
+  `date_last_mod` DATE NULL,
+  `user_last_mod` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_book`, `id_person`),
+  INDEX `id_person_pob_idx` (`id_person` ASC) VISIBLE,
+  CONSTRAINT `id_book_pob`
+    FOREIGN KEY (`id_book`)
+    REFERENCES `pe`.`book` (`id_book`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_person_pob`
+    FOREIGN KEY (`id_person`)
+    REFERENCES `pe`.`person` (`id_person`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+COMMENT = 'Table that stores books and people that own them';
+DROP TRIGGER IF EXISTS `pe`.`personownsbook_BEFORE_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`personownsbook_BEFORE_INSERT` BEFORE INSERT ON `personownsbook` FOR EACH ROW
+BEGIN
+	IF NEW.creation_date IS NULL OR NEW.creation_user IS NULL THEN 
+		SET NEW.creation_date = CURDATE();
+		SET NEW.creation_user = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`personownsbook_BEFORE_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`personownsbook_BEFORE_UPDATE` BEFORE UPDATE ON `personownsbook` FOR EACH ROW
+BEGIN
+	IF NEW.date_last_mod IS NULL OR NEW.user_last_mod IS NULL THEN
+		SET NEW.date_last_mod = CURDATE();
+		SET NEW.user_last_mod = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;

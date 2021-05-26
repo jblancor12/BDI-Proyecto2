@@ -1,0 +1,51 @@
+CREATE TABLE `pe`.`personknowsperson` (
+  `id_person1` INT NOT NULL,
+  `id_person2` INT NOT NULL,
+  `id_relationship` INT NULL,
+  `creation_date` DATE NULL,
+  `creation_user` VARCHAR(45) NULL,
+  `date_last_mod` DATE NULL,
+  `user_last_mod` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_person1`, `id_person2`),
+  INDEX `id_person2_pkp_idx` (`id_person2` ASC) VISIBLE,
+  INDEX `id_relationship_pkp_idx` (`id_relationship` ASC) VISIBLE,
+  CONSTRAINT `id_person1_pkp`
+    FOREIGN KEY (`id_person1`)
+    REFERENCES `pe`.`person` (`id_person`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_person2_pkp`
+    FOREIGN KEY (`id_person2`)
+    REFERENCES `pe`.`person` (`id_person`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_relationship_pkp`
+    FOREIGN KEY (`id_relationship`)
+    REFERENCES `pe`.`relationship` (`id_relationship`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+COMMENT = 'Table to store people that know each other and their relationship';
+DROP TRIGGER IF EXISTS `pe`.`personknowsperson_BEFORE_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`personknowsperson_BEFORE_INSERT` BEFORE INSERT ON `personknowsperson` FOR EACH ROW
+BEGIN
+	IF NEW.creation_date IS NULL OR NEW.creation_user IS NULL THEN 
+		SET NEW.creation_date = CURDATE();
+		SET NEW.creation_user = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`personknowsperson_BEFORE_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`personknowsperson_BEFORE_UPDATE` BEFORE UPDATE ON `personknowsperson` FOR EACH ROW
+BEGIN
+	IF NEW.date_last_mod IS NULL OR NEW.user_last_mod IS NULL THEN
+		SET NEW.date_last_mod = CURDATE();
+		SET NEW.user_last_mod = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;

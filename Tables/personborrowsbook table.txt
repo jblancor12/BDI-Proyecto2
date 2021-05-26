@@ -1,0 +1,48 @@
+CREATE TABLE `pe`.`personborrowsbook` (
+  `id_loan` INT NOT NULL AUTO_INCREMENT,
+  `id_book` INT NOT NULL,
+  `id_person` INT NOT NULL,
+  `loan_date` DATE NULL,
+  `return_date` DATE NULL,
+  `creation_date` DATE NULL,
+  `creation_user` VARCHAR(45) NULL,
+  `date_last_mod` DATE NULL,
+  `user_last_mod` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_loan`, `id_book`, `id_person`),
+  INDEX `id_person_pbb_idx` (`id_person` ASC) VISIBLE,
+  INDEX `id_book_pbb_idx` (`id_book` ASC) VISIBLE,
+  CONSTRAINT `id_person_pbb`
+    FOREIGN KEY (`id_person`)
+    REFERENCES `pe`.`person` (`id_person`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_book_pbb`
+    FOREIGN KEY (`id_book`)
+    REFERENCES `pe`.`book` (`id_book`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+COMMENT = 'Table that stores books and people that borrow them';
+DROP TRIGGER IF EXISTS `pe`.`personborrowsbook_BEFORE_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`personborrowsbook_BEFORE_INSERT` BEFORE INSERT ON `personborrowsbook` FOR EACH ROW
+BEGIN
+	IF NEW.creation_date IS NULL OR NEW.creation_user IS NULL THEN 
+		SET NEW.creation_date = CURDATE();
+		SET NEW.creation_user = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`personborrowsbook_BEFORE_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`personborrowsbook_BEFORE_UPDATE` BEFORE UPDATE ON `personborrowsbook` FOR EACH ROW
+BEGIN
+	IF NEW.date_last_mod IS NULL OR NEW.user_last_mod IS NULL THEN
+		SET NEW.date_last_mod = CURDATE();
+		SET NEW.user_last_mod = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;

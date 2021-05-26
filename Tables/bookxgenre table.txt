@@ -1,0 +1,44 @@
+CREATE TABLE `pe`.`bookxgenre` (
+  `id_book` INT NOT NULL,
+  `id_genre` INT NOT NULL,
+  `creation_date` VARCHAR(45) NULL,
+  `creation_user` VARCHAR(45) NULL,
+  `date_last_mod` VARCHAR(45) NULL,
+  `user_last_mod` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_book`, `id_genre`),
+  INDEX `id_genre_bxg_idx` (`id_genre` ASC) VISIBLE,
+  CONSTRAINT `id_book_bxg`
+    FOREIGN KEY (`id_book`)
+    REFERENCES `pe`.`book` (`id_book`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_genre_bxg`
+    FOREIGN KEY (`id_genre`)
+    REFERENCES `pe`.`genre` (`id_genre`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+COMMENT = 'Table to store books and their genres';
+DROP TRIGGER IF EXISTS `pe`.`bookxgenre_BEFORE_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`bookxgenre_BEFORE_INSERT` BEFORE INSERT ON `bookxgenre` FOR EACH ROW
+BEGIN
+	IF NEW.creation_date IS NULL OR NEW.creation_user IS NULL THEN 
+		SET NEW.creation_date = CURDATE();
+		SET NEW.creation_user = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`bookxgenre_BEFORE_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`bookxgenre_BEFORE_UPDATE` BEFORE UPDATE ON `bookxgenre` FOR EACH ROW
+BEGIN
+	IF NEW.date_last_mod IS NULL OR NEW.user_last_mod IS NULL THEN
+		SET NEW.date_last_mod = CURDATE();
+		SET NEW.user_last_mod = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;

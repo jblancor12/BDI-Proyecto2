@@ -1,0 +1,44 @@
+CREATE TABLE `pe`.`personxphone` (
+  `id_person` INT NOT NULL,
+  `id_phone` INT NOT NULL,
+  `creation_date` VARCHAR(45) NULL,
+  `creation_user` VARCHAR(45) NULL,
+  `date_last_mod` VARCHAR(45) NULL,
+  `user_last_mod` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_person`, `id_phone`),
+  INDEX `id_phone_pxp_idx` (`id_phone` ASC) VISIBLE,
+  CONSTRAINT `id_person_pxp`
+    FOREIGN KEY (`id_person`)
+    REFERENCES `pe`.`person` (`id_person`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `id_phone_pxp`
+    FOREIGN KEY (`id_phone`)
+    REFERENCES `pe`.`phone` (`id_phone`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+COMMENT = 'Table to store people and their phones';
+DROP TRIGGER IF EXISTS `pe`.`personxphone_BEFORE_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`personxphone_BEFORE_INSERT` BEFORE INSERT ON `personxphone` FOR EACH ROW
+BEGIN
+	IF NEW.creation_date IS NULL OR NEW.creation_user IS NULL THEN 
+		SET NEW.creation_date = CURDATE();
+		SET NEW.creation_user = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`personxphone_BEFORE_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`personxphone_BEFORE_UPDATE` BEFORE UPDATE ON `personxphone` FOR EACH ROW
+BEGIN
+	IF NEW.date_last_mod IS NULL OR NEW.user_last_mod IS NULL THEN
+		SET NEW.date_last_mod = CURDATE();
+		SET NEW.user_last_mod = SYSTEM_USER();
+	END IF;
+END$$
+DELIMITER ;
