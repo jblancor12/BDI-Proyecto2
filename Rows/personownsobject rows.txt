@@ -1,0 +1,4 @@
+CALL insert_personownsobject(4,1);
+CALL insert_personownsobject(3,2);
+CALL insert_personownsobject(5,3);
+CALL insert_personownsobject(2,4);

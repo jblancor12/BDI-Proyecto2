@@ -1,0 +1,5 @@
+CALL insert_personownsbook(2,1);
+CALL insert_personownsbook(3,3);
+CALL insert_personownsbook(5,2);
+CALL insert_personownsbook(1,4);
+CALL insert_personownsbook(4,5);

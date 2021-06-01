@@ -1,0 +1,36 @@
+USE `pe`;
+DROP function IF EXISTS `getgenredescription`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getgenredescription`(pid_genre INT) 
+RETURNS VARCHAR(45)
+DETERMINISTIC
+BEGIN
+DECLARE vcName VARCHAR(45);
+SET vcName = (SELECT description
+        FROM genre
+        WHERE id_genre = pid_genre);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+USE `pe`;
+DROP function IF EXISTS `get_genre_id`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_genre_id` (pdescription VARCHAR(45))
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (SELECT id_genre
+        FROM genre
+        WHERE description = pdescription);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+

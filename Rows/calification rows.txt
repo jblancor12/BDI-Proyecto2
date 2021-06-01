@@ -1,0 +1,5 @@
+CALL insert_calification(1);
+CALL insert_calification(2);
+CALL insert_calification(3);
+CALL insert_calification(4);
+CALL insert_calification(5);

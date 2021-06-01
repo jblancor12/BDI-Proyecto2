@@ -1,0 +1,57 @@
+USE `pe`;
+DROP procedure IF EXISTS `insert_author`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_author` (IN pname VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	INSERT INTO author(name)
+    VALUES(pname);
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_author_name`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_author_name` (IN pid INT,IN pname VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update author
+    set name = pname
+    where id_author = pid;
+END$$
+
+DELIMITER;
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_author`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_author` (IN pid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+
+	DELETE FROM author
+    WHERE id_author = pid;
+END$$
+
+

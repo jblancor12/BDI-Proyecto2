@@ -1,0 +1,144 @@
+USE `pe`;
+DROP function IF EXISTS `get_person_id`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_person_id` (pusername VARCHAR(45))
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (SELECT id_person FROM person WHERE username = pusername);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP function IF EXISTS `get_person_first_name`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_person_first_name` (pid INT)
+RETURNS VARCHAR(45)
+DETERMINISTIC
+BEGIN
+DECLARE vcName VARCHAR(45);
+SET vcName = (SELECT first_name FROM person WHERE id_person = pid);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP function IF EXISTS `get_person_last_name`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_person_last_name` (pid INT)
+RETURNS VARCHAR(45)
+DETERMINISTIC
+BEGIN
+DECLARE vcName VARCHAR(45);
+SET vcName = (SELECT last_name FROM person WHERE id_person = pid);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP function IF EXISTS `get_person_birthday`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_person_birthday` (pid INT)
+RETURNS DATE
+DETERMINISTIC
+BEGIN
+DECLARE vcName DATE;
+SET vcName = (SELECT birthday FROM person WHERE id_person = pid);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP function IF EXISTS `get_person_password`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_person_password` (pid INT)
+RETURNS VARCHAR(45)
+DETERMINISTIC
+BEGIN
+DECLARE vcName VARCHAR(45);
+SET vcName = (SELECT password FROM person WHERE id_person = pid);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP function IF EXISTS `get_person_email`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_person_email`(pid INT) 
+RETURNS VARCHAR(45)
+DETERMINISTIC
+BEGIN
+DECLARE vcName VARCHAR(45);
+SET vcName = (SELECT email FROM person WHERE id_person = pid);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP function IF EXISTS `get_person_username`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_person_username`(pid INT) 
+RETURNS VARCHAR(45)
+DETERMINISTIC
+BEGIN
+DECLARE vcName VARCHAR(45);
+SET vcName = (SELECT username FROM person WHERE id_person = pid);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP function IF EXISTS `get_person_id_person_type`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_person_id_person_type`(pid INT) 
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (SELECT id_person_type FROM person WHERE id_person = pid);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+

@@ -1,0 +1,35 @@
+USE `pe`;
+DROP function IF EXISTS `getobject_typedescription`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getobject_typedescription`(pid_object_type INT) 
+RETURNS VARCHAR(45)
+DETERMINISTIC
+BEGIN
+DECLARE vcName VARCHAR(45);
+SET vcName = (SELECT description
+        FROM object_type
+        WHERE id_object_type = pid_object_type);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+USE `pe`;
+DROP function IF EXISTS `get_object_type_id`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_object_type_id` (pdescription VARCHAR(45))
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (SELECT id_object_type
+        FROM object_type
+        WHERE description = pdescription);
+RETURN vcName;
+END$$
+
+DELIMITER ;

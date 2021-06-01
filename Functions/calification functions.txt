@@ -1,0 +1,34 @@
+USE `pe`;
+DROP function IF EXISTS `getcalificationscore`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getcalificationscore`(pid_calification INT) 
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcscore VARCHAR(45);
+SET vcscore = (SELECT score FROM calification WHERE id_calification = pid);
+RETURN vcscore;
+END$$
+
+DELIMITER ;
+
+USE `pe`;
+DROP function IF EXISTS `get_calification_id`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_calification_id` (pscore INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcscore INT;
+SET vcscore = (SELECT id_calification FROM calification WHERE score = pscore);
+RETURN vcscore;
+END$$
+
+DELIMITER ;
+
+
+

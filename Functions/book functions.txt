@@ -1,0 +1,145 @@
+USE `pe`;
+DROP function IF EXISTS `get_book_title`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_book_title`(pid_book INT) 
+RETURNS VARCHAR(45)
+DETERMINISTIC
+BEGIN
+DECLARE vcName VARCHAR(45);
+SET vcName = (
+		SELECT title
+        FROM book
+        WHERE id_book = pid_book
+        );
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+USE `pe`;
+DROP function IF EXISTS `getbookidbook_edition`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getbookidbook_edition` (pid_book INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (SELECT id_edition
+        FROM book
+        WHERE id_book = pid_book);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+USE `pe`;
+DROP function IF EXISTS `getbookideditorial`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getbookideditorial` (pid_book INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (SELECT id_editorial
+        FROM book
+        WHERE id_book = pid_book);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP function IF EXISTS `getbookidcalification`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getbookidcalification` (pid_book INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (SELECT id_calification
+        FROM book
+        WHERE id_book = pid_book);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP function IF EXISTS `getbookidphoto`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getbookidphoto` (pid_book INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (SELECT id_photo
+        FROM book
+        WHERE id_book = pid_book);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP function IF EXISTS `getbookID`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getbookID` (ptitle VARCHAR(45))
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (SELECT id_book
+        FROM book
+        WHERE title = ptitle);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

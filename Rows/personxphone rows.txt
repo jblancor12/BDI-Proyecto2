@@ -1,0 +1,3 @@
+CALL insert_personxphone(1,1);
+CALL insert_personxphone(1,2);
+CALL insert_personxphone(2,3);

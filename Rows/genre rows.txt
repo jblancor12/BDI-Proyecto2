@@ -1,0 +1,11 @@
+CALL insert_genre('Fantasy');
+CALL insert_genre('Comic Book');
+CALL insert_genre('Drama');
+CALL insert_genre('Graphic Novel');
+CALL insert_genre('Horror');
+CALL insert_genre('Mystery');
+CALL insert_genre('Science Fiction');
+CALL insert_genre('Thriller');
+CALL insert_genre('Action');
+CALL insert_genre('Superhero');
+CALL insert_genre('Novel');

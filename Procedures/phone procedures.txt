@@ -1,0 +1,57 @@
+USE `pe`;
+DROP procedure IF EXISTS `insert_phone`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_phone` (IN pphone_number INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	INSERT INTO phone(phone_number)
+    VALUES(pphone_number);
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_phone_phone_number`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_phone_phone_number` (IN pid INT,IN pphone_number INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update phone
+    set phone_number = pphone_number
+    where id_phone = pid;
+END$$
+
+
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_phone`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_phone` (IN pid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+
+	DELETE FROM phone
+    WHERE id_phone = pid;
+END$$
+
+DELIMITER ;

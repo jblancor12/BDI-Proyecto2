@@ -1,0 +1,7 @@
+
+CALL insert_author('George R.R. Martin');
+CALL insert_author('J.R.R. Tolkien');
+CALL insert_author('Robert Kirkman');
+CALL insert_author('H.P. Lovecraft');
+CALL insert_author('Alan Moore');
+CALL insert_author('Ryan Ottley');

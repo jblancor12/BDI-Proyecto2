@@ -1,0 +1,8 @@
+CALL insert_book('The Lord of the Rings',1,5,5);
+CALL insert_book('Invincible',5,4,5);
+CALL insert_book('The Walking Dead',4,4,5);
+CALL insert_book('A Game of Thrones',3,3,5);
+CALL insert_book('A Dance with Dragons',3,2,5);
+CALL insert_book('The Call of Cthulhu',2,5,5);
+CALL insert_book('The Shadow over Innsmouth',2,1,5);
+CALL insert_book('Watchmen',5,4,5);

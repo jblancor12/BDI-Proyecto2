@@ -1,0 +1,37 @@
+USE `pe`;
+DROP function IF EXISTS `geteditiondescription`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `geteditiondescription`(pid_edition INT) 
+RETURNS VARCHAR(45)
+DETERMINISTIC
+BEGIN
+DECLARE vcName VARCHAR(45);
+SET vcName = (SELECT description
+        FROM edition
+        WHERE id_edition = pid_edition);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+USE `pe`;
+DROP function IF EXISTS `get_edition_id`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_edition_id` (pdescription VARCHAR(45))
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (SELECT id_edition
+        FROM edition
+        WHERE description = pdescription);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+

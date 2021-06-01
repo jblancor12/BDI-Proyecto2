@@ -1,0 +1,32 @@
+USE `pe`;
+DROP function IF EXISTS `getphotodata`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getphotodata`(pid_photo INT) 
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcphoto BLOB;
+SET vcphoto = (SELECT data FROM photo WHERE id_photo = pid);
+RETURN vcphoto;
+END$$
+
+DELIMITER ;
+
+USE `pe`;
+DROP function IF EXISTS `get_photo_id`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_photo_id` (pdata BLOB)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcphoto INT;
+SET vcphoto = (SELECT id_photo FROM photo WHERE data = pdata);
+RETURN vcphoto;
+END$$
+
+DELIMITER ;
+

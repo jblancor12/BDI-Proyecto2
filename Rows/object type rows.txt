@@ -1,0 +1,2 @@
+CALL insert_object_type('Movie');
+CALL insert_object_type('Videogame');

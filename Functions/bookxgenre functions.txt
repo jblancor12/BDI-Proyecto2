@@ -1,0 +1,38 @@
+USE `pe`;
+DROP function IF EXISTS `getbookxgenreIdgenre`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getbookxgenreIdgenre` (pid_book INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select id_genre
+    from bookxgenre
+    where id_book=pid_book);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP function IF EXISTS `getbookxgenreIdbook`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getbookxgenreIdbook` (pid_genre INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select id_book
+    from bookxgenre
+    where id_genre=pid_genre);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+

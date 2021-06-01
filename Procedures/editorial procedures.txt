@@ -1,0 +1,60 @@
+USE `pe`;
+DROP procedure IF EXISTS `insert_editorial`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_editorial`(pdescription VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	INSERT INTO editorial(description)
+	VALUES(pdescription);
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_editorial`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_editorial`(pid_editorial INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	DELETE FROM editorial
+	WHERE id_editorial = pid_editorial;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_editorial_description`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_editorial_description` (pid_editorial INT, pdescription VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	UPDATE editorial
+	SET description = pdescription
+	WHERE id_editorial = pid_editorial;
+END$$
+
+DELIMITER ;
+
+
+
+

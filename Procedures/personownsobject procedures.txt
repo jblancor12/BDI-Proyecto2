@@ -1,0 +1,78 @@
+USE `pe`;
+DROP procedure IF EXISTS `insert_personownsobject`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_personownsobject`(pid_person INT, pid_object INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	insert into personownsobject(id_person,id_object)
+    values (pid_person,pid_object);
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_personownsobject`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_personownsobject`(pid_person INT, pid_object INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	delete from personownsobject
+    where  id_object = pid_object AND id_person = pid_person;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_poo_id_person`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_poo_id_person`(pid_person INT, pnewid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update personownsobject
+    set id_person=pnewid
+    where id_person=pid_person;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_poo_id_object`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_poo_id_object`(pid_object INT, pnewid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update personownsobject
+    set id_object=pnewid
+    where id_object=pid_object;
+END$$
+
+DELIMITER ;
+
+

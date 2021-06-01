@@ -1,0 +1,76 @@
+USE `pe`;
+DROP procedure IF EXISTS `insert_personxphone`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_personxphone`(pid_person INT, pid_phone INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	insert into personxphone(id_person,id_phone)
+    values (pid_person,pid_phone);
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_personxphone`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_personxphone`(pid_person INT, pid_phone INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	delete from personxphone
+    where  id_phone = pid_phone AND id_person = pid_person;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_pxp_id_person`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_pxp_id_person`(pid_person INT, pnewid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update personxphone
+    set id_person=pnewid
+    where id_person=pid_person;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_pxp_id_phone`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_pxp_id_phone`(pid_phone INT, pnewid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update personxphone
+    set id_phone=pnewid
+    where id_phone=pid_phone;
+END$$
+
+DELIMITER ;

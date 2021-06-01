@@ -1,0 +1,4 @@
+CALL insert_relationship('Student');
+CALL insert_relationship('Family');
+CALL insert_relationship('Friend');
+CALL insert_relationship('Acquaintance');

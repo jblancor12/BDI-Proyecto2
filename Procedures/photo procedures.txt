@@ -1,0 +1,56 @@
+
+USE `pe`;
+DROP procedure IF EXISTS `insert_photo`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_photo` (IN pdata BLOB)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	INSERT INTO photo(data)
+    VALUES(pdata);
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_photo_data`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_photo_data` (IN pid INT,IN pdata BLOB)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update photo
+    set data = pdata
+    where id_photo = pid;
+END$$
+
+DELIMITER;
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_photo`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_photo` (IN pid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+
+	DELETE FROM photo
+    WHERE id_photo = pid;
+END$$

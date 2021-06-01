@@ -1,0 +1,5 @@
+CALL insert_editorial('4A');
+CALL insert_editorial('Allen and Unwin');
+CALL insert_editorial('Bantam');
+CALL insert_editorial('Bloomsbury');
+CALL insert_editorial('Image');

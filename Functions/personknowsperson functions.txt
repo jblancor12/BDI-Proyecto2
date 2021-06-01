@@ -1,0 +1,54 @@
+USE `pe`;
+DROP function IF EXISTS `getpersonknowspersonIdperson2`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getpersonknowspersonIdperson2` (pid_person1 INT,pid_relationship INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select id_person2
+    from personknowsperson
+    where id_person1=pid_person1 and id_relationship=pid_relationship);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP function IF EXISTS `getpersonknowspersonIdperson1`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getpersonknowspersonIdperson1` (pid_person2 INT,pid_relationship INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select id_person1
+    from personknowsperson
+    where id_person2=pid_person2 and id_relationship=pid_relationship);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+USE `pe`;
+DROP function IF EXISTS `getpersonknowspersonidrelationship`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getpersonknowspersonidrelationship` (pid_person1 INT,person2 INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select id_relationship
+    from personknowsperson
+    where id_person2=pid_person2 and id_person1=pid_person1);
+RETURN vcName;
+END$$
+
+DELIMITER ;

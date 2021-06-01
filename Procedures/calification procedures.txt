@@ -1,0 +1,60 @@
+USE `pe`;
+DROP procedure IF EXISTS `insert_calification`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_calification` (IN pscore INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	INSERT INTO calification(score)
+    VALUES(pscore);
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_calification_score`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_calification_score` (IN pid INT,IN pscore INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update calification
+    set score = pscore
+    where id_calification = pid;
+END$$
+
+DELIMITER ;
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_calification`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_calification` (IN pid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+
+	DELETE FROM calification
+    WHERE id_calification = pid;
+END$$
+
+
+DELIMITER ;
+
+

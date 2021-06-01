@@ -1,0 +1,75 @@
+USE `pe`;
+DROP function IF EXISTS `getpersonborrowsbookIdperson`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getpersonborrowsbookIdperson` (pid_loan INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select id_person
+    from personborrowsbook
+    where id_loan=pid_loan);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP function IF EXISTS `getpersonborrowsbookIdbook`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getpersonborrowsbookIdbook` (pid_loan INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select id_book
+    from personborrowsbook
+    where id_loan=pid_loan);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP function IF EXISTS `getpersonborrowsbookreturndate`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getpersonborrowsbookreturndate` (pid_loan INT)
+RETURNS DATE
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select return_date
+    from personborrowsbook
+    where id_loan=pid_loan);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP function IF EXISTS `getpersonborrowsbookrloandate`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getpersonborrowsbookloandate` (pid_loan INT)
+RETURNS DATE
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select loan_date
+    from personborrowsbook
+    where id_loan=pid_loan);
+RETURN vcName;
+END$$
+
+DELIMITER ;

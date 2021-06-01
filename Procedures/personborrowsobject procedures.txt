@@ -1,0 +1,121 @@
+USE `pe`;
+DROP procedure IF EXISTS `insert_personborrowsobject`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_personborrowsobject`(pid_person INT, pid_object INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	insert into personborrowsobject(id_person,id_object)
+    values (pid_person,pid_object);
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_personborrowsobject`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_personborrowsobject`(pid_loan INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	delete from personborrowsobject
+    where  id_loan=pid_loan;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_pbo_id_person`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_pbo_id_person`(pid_loan INT, pnewid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update personborrowsobject
+    set id_person=pnewid
+    where id_loan=pid_loan;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_pbo_id_object`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_pbo_id_object`(pid_loan INT, pnewid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update personborrowsobject
+    set id_object=pnewid
+    where id_loan=pid_loan;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_pbo_return_date`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_pbo_return_date`(pid_loan INT, preturn_date VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update personborrowsobject
+    set return_date = STR_TO_DATE(preturn_date,'%Y-%m-%d')
+    where id_loan=pid_loan;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_pbo_loan_date`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_pbo_loan_date`(pid_loan INT, ploan_date VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update personborrowsobject
+    set loan_date = TO_DATE(ploan_date,'%Y-%m-%d')
+    where id_loan=pid_loan;
+END$$
+
+DELIMITER ;
+
+
+
+
+

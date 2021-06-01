@@ -1,0 +1,57 @@
+USE `pe`;
+DROP procedure IF EXISTS `insert_genre`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_genre`(pdescription VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	INSERT INTO genre(description)
+	VALUES(pdescription);
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_genre`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_genre`(pid_genre INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	DELETE FROM genre
+	WHERE id_genre = pid_genre;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_genre_description`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_genre_description` (pid_genre INT, pdescription VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	UPDATE genre
+	SET description = pdescription
+	WHERE id_genre = pid_genre;
+END$$
+
+DELIMITER ;
+

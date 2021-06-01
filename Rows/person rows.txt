@@ -1,0 +1,15 @@
+CALL insert_user(1,'Luis Diego','Rodriguez',DATE '1997-04-11','ldrc161997@gmail.com','IDIR','ldrc10');
+
+CALL insert_user(2,'Jose','Blanco',DATE '1998-07-07','jblanco@gmail.com','Guthix','jablan');
+
+CALL insert_user(3,'Paula','Rodriguez',DATE '1992-06-27','baula@gmail.com','baula','pau10');
+
+CALL insert_user('Tomas','Alvarado',DATE'1997-01-14','tief@gmail.com','tief','tief10');
+
+CALL insert_user('Nidia','Gonzalez',DATE '1977-11-14','nidus@gmail.com','nidus','nidus10');
+
+CALL update_person_person_type(1,1);
+CALL update_person_person_type(2,1);
+CALL update_person_person_type(3,2);
+CALL update_person_person_type(4,2);
+CALL update_person_person_type(5,3);

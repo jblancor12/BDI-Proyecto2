@@ -1,0 +1,87 @@
+USE `pe`;
+DROP procedure IF EXISTS `insert_bookxauthor`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_bookxauthor`(pid_author INT, pid_book INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	insert into bookxauthor(id_author,id_book)
+    values (pid_author,pid_book);
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_bookxauthor`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_bookxauthor`(pid_author INT, pid_book INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	delete from bookxauthor
+    where  id_book = pid_book AND id_author = pid_author;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_bxa_id_author`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_bxa_id_author`(pid_author INT, pnewid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update bookxauthor
+    set id_author=pnewid
+    where id_author=pid_author;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_bxa_id_book`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_bxa_id_book`(pid_book INT, pnewid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update bookxauthor
+    set id_book=pnewid
+    where id_book=pid_book;
+END$$
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+

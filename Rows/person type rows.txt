@@ -1,0 +1,3 @@
+CALL insert_person_type('Admin');
+CALL insert_person_type('User');
+CALL insert_person_type('Normal');

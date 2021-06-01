@@ -1,0 +1,57 @@
+USE `pe`;
+DROP procedure IF EXISTS `insert_object_type`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_object_type`(pdescription VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	INSERT INTO object_type(description)
+	VALUES(pdescription);
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_object_type`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_object_type`(pid_object_type INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	DELETE FROM object_type
+	WHERE id_object_type = pid_object_type;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_object_type_description`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_object_type_description` (pid_object_type INT, pdescription VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	UPDATE object_type
+	SET description = pdescription
+	WHERE id_object_type = pid_object_type;
+END$$
+
+DELIMITER ;
+

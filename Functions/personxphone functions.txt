@@ -1,0 +1,38 @@
+USE `pe`;
+DROP function IF EXISTS `getpersonxphoneIdperson`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getpersonxphoneIdperson` (pid_phone INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select id_person
+    from personxphone
+    where id_phone=pid_phone);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP function IF EXISTS `getpersonxphoneIdphone`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getpersonxphoneIdphone` (pid_person INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select id_phone
+    from personxphone
+    where id_person=pid_person);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+

@@ -1,0 +1,55 @@
+USE `pe`;
+DROP procedure IF EXISTS `insert_relationship`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_relationship` (IN pdescription VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	INSERT INTO relationship(description)
+    VALUES(pdescription);
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_relationship_description`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_relationship_description` (IN pid INT,IN pdescription VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update relationship
+    set description = pdescription
+    where id_relationship = pid;
+END$$
+
+DELIMITER;
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_relationship`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_relationship` (IN pid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+
+	DELETE FROM relationship
+    WHERE id_relationship = pid;
+END$$

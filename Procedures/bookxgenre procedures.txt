@@ -1,0 +1,78 @@
+USE `pe`;
+DROP procedure IF EXISTS `insert_bookxgenre`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_bookxgenre`(pid_genre INT, pid_book INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	insert into bookxgenre(id_genre,id_book)
+    values (pid_genre,pid_book);
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_bookxgenre`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_bookxgenre`(pid_genre INT, pid_book INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	delete from bookxgenre
+    where  id_book = pid_book AND id_genre = pid_genre;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_bxg_id_genre`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_bxg_id_genre`(pid_genre INT, pnewid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update bookxgenre
+    set id_genre=pnewid
+    where id_genre=pid_genre;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_bxg_id_book`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_bxg_id_book`(pid_book INT, pnewid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update bookxgenre
+    set id_book=pnewid
+    where id_book=pid_book;
+END$$
+
+DELIMITER ;
+
+

@@ -1,0 +1,5 @@
+CALL insert_personborrowsbook(5,1);
+CALL insert_personborrowsbook(4,2);
+CALL insert_personborrowsbook(4,3);
+CALL insert_personborrowsbook(3,4);
+CALL insert_personborrowsbook(2,5);

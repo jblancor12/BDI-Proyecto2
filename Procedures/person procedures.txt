@@ -1,0 +1,202 @@
+USE `pe`;
+DROP procedure IF EXISTS `insert_person`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_person`(pfirst_name VARCHAR(45), plast_name VARCHAR(45), pbirthday VARCHAR(45), pemail VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	INSERT INTO person(first_name, last_name, birthday, email)
+	VALUES(pfirst_name, plast_name, STR_TO_DATE(pbirthday,'%Y-%m-%d'), pemail);
+END$$
+
+DELIMITER ;
+
+USE `pe`;
+DROP procedure IF EXISTS `insert_user`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_user`(pfirst_name VARCHAR(45), plast_name VARCHAR(45), pbirthday VARCHAR(45), pemail VARCHAR(45),pusername VARCHAR(45),ppassword VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	INSERT INTO person(first_name, last_name, birthday, email,username,password)
+	VALUES(pfirst_name, plast_name, STR_TO_DATE(pbirthday,'%Y-%m-%d'), pemail,pusername,ppassword);
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_person_first_name`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_person_first_name` (IN pid INT,IN pfirst_name VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	UPDATE person
+    SET first_name = pfirst_name
+    WHERE id_person = pid;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_person_last_name`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_person_last_name` (IN pid INT,IN plast_name VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	UPDATE person
+    SET last_name = plast_name
+    WHERE id_person = pid;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_person_birthday`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_person_birthday` (IN pid INT,IN pbirthday VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	UPDATE person
+    SET birthday = STR_TO_DATE(pbirthday,'%Y-%m-%d')
+    WHERE id_person = pid;
+END$$
+
+DELIMITER ;
+
+
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_person_password`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_person_password` (IN pid INT,IN ppassword VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	UPDATE person
+    SET password = ppassword
+    WHERE id_person = pid;
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_person_email`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_person_email`(IN pid INT,IN pemail VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	UPDATE person
+    SET email = pemail
+    WHERE id_person = pid;
+END$$
+
+DELIMITER ;
+
+
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_person_username`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_person_username`(IN pid INT,IN pusername VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	UPDATE person
+    SET username = pusername
+    WHERE id_person = pid;
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_person_id_person_type`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_person_id_person_type`(IN pid INT,IN pid_person_type INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	UPDATE person
+    SET id_person_type = pid_person_type
+    WHERE id_person = pid;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_person`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_person` (IN pid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	DELETE FROM person
+    WHERE id_person = pid;
+END$$
+
+DELIMITER ;
+

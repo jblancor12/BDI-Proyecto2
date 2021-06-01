@@ -1,0 +1,36 @@
+USE `pe`;
+DROP function IF EXISTS `getbookxauthorIdauthor`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getbookxauthorIdauthor` (pid_book INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select id_author
+    from bookxauthor
+    where id_book=pid_book);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP function IF EXISTS `getbookxauthorIdbook`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getbookxauthorIdbook` (pid_author INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select id_book
+    from bookxauthor
+    where id_author=pid_author);
+RETURN vcName;
+END$$
+
+DELIMITER ;

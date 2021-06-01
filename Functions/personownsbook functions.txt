@@ -1,0 +1,37 @@
+USE `pe`;
+DROP function IF EXISTS `getpersonownsbookIdperson`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getpersonownsbookIdperson` (pid_book INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select id_person
+    from personownsbook
+    where id_book=pid_book);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP function IF EXISTS `getpersonownsbookIdbook`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getpersonownsbookIdbook` (pid_person INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select id_book
+    from personownsbook
+    where id_person=pid_person);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+

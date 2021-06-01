@@ -1,0 +1,143 @@
+USE `pe`;
+DROP procedure IF EXISTS `insert_book`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_book`(ptitle VARCHAR(45), pid_edition INT, pid_editorial INT, pid_calification INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	INSERT INTO book(title, id_edition, id_editorial, id_calification)
+	VALUES(ptitle, pid_edition, pid_editorial, pid_calification);
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_book`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_book`(pid_book INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	DELETE FROM book
+	WHERE id_book = pid_book;
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_book_title`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_book_title`(pid_book INT, ptitle VARCHAR(45))
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	UPDATE book
+	SET title = ptitle
+	WHERE id_book = pid_book;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_book_id_book_edition`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_book_id_book_edition`(pid_book INT, pid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	UPDATE book
+	SET id_edition = pid
+	WHERE id_book = pid_book;
+END$$
+
+DELIMITER ;
+
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_book_id_editorial`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_book_id_editorial`(pid_book INT, pid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	UPDATE book
+	SET id_editorial = pid
+	WHERE id_book = pid_book;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_book_id_calification`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_book_id_calification`(pid_book INT, pid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	UPDATE book
+	SET id_calification = pid
+	WHERE id_book = pid_book;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_book_id_photo`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_book_id_photo`(pid_book INT, pid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	UPDATE book
+	SET id_photo = pid
+	WHERE id_book = pid_book;
+END$$
+
+DELIMITER ;
+
+
+
+

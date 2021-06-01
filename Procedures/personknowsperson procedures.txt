@@ -1,0 +1,96 @@
+USE `pe`;
+DROP procedure IF EXISTS `insert_personknowsperson`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `insert_personknowsperson`(pid_person1 INT, pid_person2 INT,pid_relationship INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	insert into personknowsperson(id_person1,id_person2,id_relationship)
+    values (pid_person1,pid_person2,pid_relationship);
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `remove_personknowsperson`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `remove_personknowsperson`(pid_person1 INT, pid_person2 INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	delete from personknowsperson
+    where  id_person2 = pid_person2 AND id_person1 = pid_person1;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_pkp_id_person1`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_pkp_id_person1`(pid_person1 INT, pid_person2 INT,pnewid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update personknowsperson
+    set id_person1=pnewid
+    where id_person1=pid_person1 and id_person2=pid_person2;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_pkp_id_person2`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_pkp_id_person2`(pid_person1 INT,pid_person2 INT, pnewid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update personknowsperson
+    set id_person2=pnewid
+    where id_person1=pid_person1 and id_person2=pid_person2;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `update_pkp_id_relationship`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `update_pkp_id_relationship1`(pid_person1 INT, pid_person2 INT,pnewid INT)
+BEGIN
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SELECT 'An error has occurred';
+END;
+	update personknowsperson
+    set id_relationship=pnewid
+    where id_person1=pid_person1 and id_person2=pid_person2;
+END$$
+
+DELIMITER ;

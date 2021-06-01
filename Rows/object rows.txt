@@ -1,0 +1,4 @@
+CALL insert_object('Bloodborne',2);
+CALL insert_object('God of War',2);
+CALL insert_object('Blade Runner',1);
+CALL insert_object('Mad Max',1);

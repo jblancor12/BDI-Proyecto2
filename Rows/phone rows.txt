@@ -1,0 +1,8 @@
+CALL insert_phone(84704284);
+CALL insert_phone(22530648);
+CALL insert_phone(12345678);
+
+
+
+
+

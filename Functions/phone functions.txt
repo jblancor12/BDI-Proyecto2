@@ -1,0 +1,31 @@
+USE `pe`;
+DROP function IF EXISTS `getphone_number`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getphonephone_number`(pid_phone INT) 
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcphone_number VARCHAR(45);
+SET vcphone_number = (SELECT phone_number FROM phone WHERE id_phone = pid);
+RETURN vcphone_number;
+END$$
+
+DELIMITER ;
+
+USE `pe`;
+DROP function IF EXISTS `get_phone_id`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_phone_id` (pphone_number INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcphone_number INT;
+SET vcphone_number = (SELECT id_phone FROM phone WHERE phone_number = pphone_number);
+RETURN vcphone_number;
+END$$
+
+DELIMITER ;

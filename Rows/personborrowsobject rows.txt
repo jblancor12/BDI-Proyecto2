@@ -1,0 +1,4 @@
+CALL insert_personborrowsobject(1,1);
+CALL insert_personborrowsobject(2,2);
+CALL insert_personborrowsobject(3,3);
+CALL insert_personborrowsobject(4,4);

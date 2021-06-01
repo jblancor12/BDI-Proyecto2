@@ -1,0 +1,5 @@
+CALL insert_edition('First Edition');
+CALL insert_edition('Second Edition');
+CALL insert_edition('Third Edition');
+CALL insert_edition('Final Edition');
+CALL insert_edition('Special Edition');

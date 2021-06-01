@@ -1,0 +1,36 @@
+USE `pe`;
+DROP function IF EXISTS `getpersonownsobjectIdperson`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getpersonownsobjectIdperson` (pid_object INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select id_person
+    from personownsobject
+    where id_object=pid_object);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+
+USE `pe`;
+DROP function IF EXISTS `getpersonownsobjectIdobject`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getpersonownsobjectIdobject` (pid_person INT)
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select id_object
+    from personownsobject
+    where id_person=pid_person);
+RETURN vcName;
+END$$
+
+DELIMITER ;

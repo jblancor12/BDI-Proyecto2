@@ -1,0 +1,31 @@
+USE `pe`;
+DROP function IF EXISTS `getauthorname`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `getauthorname`(pid_author INT) 
+RETURNS VARCHAR(45)
+DETERMINISTIC
+BEGIN
+DECLARE vcName VARCHAR(45);
+SET vcName = (SELECT name FROM author WHERE id_author = pid);
+RETURN vcName;
+END$$
+
+DELIMITER ;
+
+USE `pe`;
+DROP function IF EXISTS `get_author_id`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE FUNCTION `get_author_id` (pname VARCHAR(45))
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (SELECT id_author FROM author WHERE name = pname);
+RETURN vcName;
+END$$
+
+DELIMITER ;
