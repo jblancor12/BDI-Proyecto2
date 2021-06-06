@@ -11,7 +11,7 @@ BEGIN
     SELECT 'An error has occurred';
 END;
 	INSERT INTO person(first_name, last_name, birthday, email)
-	VALUES(pfirst_name, plast_name, STR_TO_DATE(pbirthday,'%Y-%m-%d'), pemail);
+	VALUES(pfirst_name, plast_name, STR_TO_DATE(pbirthday,'%Y/%m/%d'), pemail);
 END$$
 
 DELIMITER ;
@@ -29,7 +29,7 @@ BEGIN
     SELECT 'An error has occurred';
 END;
 	INSERT INTO person(first_name, last_name, birthday, email,username,password)
-	VALUES(pfirst_name, plast_name, STR_TO_DATE(pbirthday,'%Y-%m-%d'), pemail,pusername,ppassword);
+	VALUES(pfirst_name, plast_name, STR_TO_DATE(pbirthday,'%Y/%m/%d'), pemail,pusername,ppassword);
 END$$
 
 DELIMITER ;
@@ -89,7 +89,7 @@ BEGIN
     SELECT 'An error has occurred';
 END;
 	UPDATE person
-    SET birthday = STR_TO_DATE(pbirthday,'%Y-%m-%d')
+    SET birthday = STR_TO_DATE(pbirthday,'%Y/%m/%d')
     WHERE id_person = pid;
 END$$
 

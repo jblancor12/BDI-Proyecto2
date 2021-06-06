@@ -89,7 +89,7 @@ BEGIN
     SELECT 'An error has occurred';
 END;
 	update personborrowsbook
-    set return_date = STR_TO_DATE(preturn_date,'%Y-%m-%d')
+    set return_date = STR_TO_DATE(preturn_date,'%Y/%m/%d')
     where id_loan=pid_loan;
 END$$
 
@@ -109,7 +109,7 @@ BEGIN
     SELECT 'An error has occurred';
 END;
 	update personborrowsbook
-    set loan_date = STR_TO_DATE(ploan_date,'%Y-%m-%d')
+    set loan_date = STR_TO_DATE(ploan_date,'%Y/%m/%d')
     where id_loan=pid_loan;
 END$$
 
