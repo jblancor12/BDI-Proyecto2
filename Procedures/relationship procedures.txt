@@ -53,3 +53,19 @@ END;
 	DELETE FROM relationship
     WHERE id_relationship = pid;
 END$$
+
+
+
+USE `pe`;
+DROP procedure IF EXISTS `show_relationship`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `show_relationship` ()
+BEGIN
+select id_relationship, description
+from relationship;
+END$$
+
+DELIMITER ;
+

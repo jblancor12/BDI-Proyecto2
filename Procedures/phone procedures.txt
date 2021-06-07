@@ -55,3 +55,18 @@ END;
 END$$
 
 DELIMITER ;
+
+
+USE `pe`;
+DROP procedure IF EXISTS `show_phone`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `show_phone` ()
+BEGIN
+select id_phone, phone_number
+from phone;
+END$$
+
+DELIMITER ;
+

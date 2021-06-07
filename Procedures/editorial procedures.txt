@@ -55,6 +55,19 @@ END$$
 
 DELIMITER ;
 
+USE `pe`;
+DROP procedure IF EXISTS `show_editorial`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `show_editorial` ()
+BEGIN
+select id_editorial, description
+from editorial;
+END$$
+
+DELIMITER ;
+
 
 
 

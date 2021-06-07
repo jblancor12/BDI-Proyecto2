@@ -54,4 +54,17 @@ END;
     WHERE id_author = pid;
 END$$
 
+USE `pe`;
+DROP procedure IF EXISTS `show_authors`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `show_authors` ()
+BEGIN
+select id_author, name
+from author;
+END$$
+
+DELIMITER ;
+
 

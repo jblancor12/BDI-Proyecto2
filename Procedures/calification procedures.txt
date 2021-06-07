@@ -58,3 +58,26 @@ END$$
 DELIMITER ;
 
 
+USE `pe`;
+DROP procedure IF EXISTS `show_califications`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `show_califications` ()
+BEGIN
+select id_calification, score
+from calification;
+END$$
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+

@@ -200,3 +200,15 @@ END$$
 
 DELIMITER ;
 
+USE `pe`;
+DROP procedure IF EXISTS `show_persons`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `show_persons` ()
+BEGIN
+select id_person, first_name, last_name, birthday, email
+from person;
+END$$
+
+DELIMITER ;

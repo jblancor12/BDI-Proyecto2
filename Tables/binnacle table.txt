@@ -11,6 +11,10 @@ CREATE TABLE `pe`.`binnacle` (
   PRIMARY KEY (`id_binnacle`));
 DROP TRIGGER IF EXISTS `pe`.`binnacle_BEFORE_INSERT`;
 
+ALTER TABLE `pe`.`binnacle` 
+ADD COLUMN `change_type` VARCHAR(45) NULL AFTER `id_binnacle`;
+
+
 DELIMITER $$
 USE `pe`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`binnacle_BEFORE_INSERT` BEFORE INSERT ON `binnacle` FOR EACH ROW
@@ -33,3 +37,145 @@ BEGIN
 		END IF;
 END$$
 DELIMITER ;
+
+DROP TRIGGER IF EXISTS `pe`.`author_AFTER_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`author_AFTER_INSERT` AFTER INSERT ON `author` FOR EACH ROW
+BEGIN
+	insert into binnacle(change_type,table_name,field_name,current_value)
+	values('insert','author','name', new.name);
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`author_BEFORE_DELETE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`author_BEFORE_DELETE` BEFORE DELETE ON `author` FOR EACH ROW
+BEGIN
+	insert into binnacle(change_type,table_name,current_value)
+	values('delete','author',name);
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`author_AFTER_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`author_AFTER_UPDATE` AFTER UPDATE ON `author` FOR EACH ROW
+BEGIN
+	insert into binnacle(change_type,table_name,field_name,previous_value, current_value)
+	values('update','author','name',old.name, new.name);
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS `pe`.`calification_AFTER_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER=`root`@`localhost` TRIGGER `calification_AFTER_UPDATE` AFTER UPDATE ON `calification` FOR EACH ROW BEGIN
+	insert into binnacle(change_type,table_name,field_name,previous_value, current_value)
+	values('update','calification','score',old.score, new.score);
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`calification_AFTER_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`calification_AFTER_INSERT` AFTER INSERT ON `calification` FOR EACH ROW
+BEGIN
+	insert into binnacle(change_type,table_name,field_name, current_value)
+	values('insert','calification','score', new.score);
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`calification_BEFORE_DELETE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`calification_BEFORE_DELETE` BEFORE DELETE ON `calification` FOR EACH ROW
+BEGIN
+	insert into binnacle(change_type,table_name,field_name, current_value)
+	values('delete','calification','score', score);
+END$$
+DELIMITER ;
+
+
+DROP TRIGGER IF EXISTS `pe`.`edition_AFTER_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER=`root`@`localhost` TRIGGER `edition_AFTER_UPDATE` AFTER UPDATE ON `edition` FOR EACH ROW BEGIN
+	insert into binnacle(change_type,table_name,field_name,previous_value, current_value)
+	values('update','edition','description',old.description, new.description);
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`edition_AFTER_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`edition_AFTER_INSERT` AFTER INSERT ON `edition` FOR EACH ROW
+BEGIN
+	insert into binnacle(change_type,table_name,field_name, current_value)
+	values('insert','edition','description',new.description);
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`edition_BEFORE_DELETE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`edition_BEFORE_DELETE` BEFORE DELETE ON `edition` FOR EACH ROW
+BEGIN
+	insert into binnacle(change_type,table_name,field_name, current_value)
+	values('delete','edition','description',description);
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS `pe`.`editorial_AFTER_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER=`root`@`localhost` TRIGGER `editorial_AFTER_UPDATE` AFTER UPDATE ON `editorial` FOR EACH ROW BEGIN
+	insert into binnacle(change_type,table_name,field_name,previous_value, current_value)
+	values('update','editorial','description',old.description, new.description);
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`editorial_AFTER_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`editorial_AFTER_INSERT` AFTER INSERT ON `editorial` FOR EACH ROW
+BEGIN
+	insert into binnacle(change_type,table_name,field_name,current_value)
+	values('insert','editorial','description',new.description);
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`editorial_BEFORE_DELETE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`editorial_BEFORE_DELETE` BEFORE DELETE ON `editorial` FOR EACH ROW
+BEGIN
+	insert into binnacle(change_type,table_name,field_name,current_value)
+	values('delete','editorial','description',description);
+END$$
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

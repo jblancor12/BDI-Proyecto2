@@ -55,3 +55,19 @@ END$$
 
 DELIMITER ;
 
+
+USE `pe`;
+DROP procedure IF EXISTS `show_genre`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE PROCEDURE `show_genre` ()
+BEGIN
+select id_genre, description
+from genre;
+END$$
+
+DELIMITER ;
+
+
+
