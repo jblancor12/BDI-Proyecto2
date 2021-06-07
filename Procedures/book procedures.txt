@@ -150,8 +150,8 @@ select a.id_book, a.title, e.description, d.description,b.name, c.score
 from book a
 join editorial e
 on a.id_editorial = e.id_editorial
-join bookedition d
-on a.id_book_edition= d.id_edition
+join edition d
+on a.id_edition= d.id_edition
 join bookxauthor j
 on a.id_book = j.id_book
 join author b

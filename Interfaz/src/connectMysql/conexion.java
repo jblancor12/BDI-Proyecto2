@@ -7,11 +7,14 @@ package connectMysql;
 import com.mysql.jdbc.Connection;
 import java.sql.CallableStatement;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import oracle.jdbc.OracleTypes;
 /**
  *
@@ -269,14 +272,15 @@ public class conexion {
         
         /*************************************************************************************************/
      
-   public static int getEditorialId(String pdescription)throws SQLException, ParseException{   
+    public static int getEditorialId(String pdescription)throws SQLException, ParseException{   
         con = (Connection) DriverManager.getConnection(urlPE, user, pass);
-        CallableStatement stmt = con.prepareCall("{?= call get_editorial_id(?)}");
-        
+        CallableStatement stmt = con.prepareCall("{?=call get_editorial_id(?)}");
+        System.out.println(pdescription);
         int r;
         stmt.registerOutParameter(1,Types.INTEGER);
         stmt.setString(2 , pdescription);
-        stmt.executeQuery();
+        stmt.execute();
+         System.out.println(stmt.getInt(1));
         r = (int) stmt.getInt(1);
         return r;
     }
@@ -284,12 +288,12 @@ public class conexion {
         
     public static int getEditionId(String pdescription)throws SQLException, ParseException{   
         con = (Connection) DriverManager.getConnection(urlPE, user, pass);
-        CallableStatement stmt = con.prepareCall("{?= call get_bookedition_id(?)}");
+        CallableStatement stmt = con.prepareCall("{ ? = call get_edition_id(?)}");
         
         int r;
         stmt.registerOutParameter(1,Types.INTEGER);
         stmt.setString(2 , pdescription);
-        stmt.executeQuery();
+        stmt.execute();
         r = (int) stmt.getInt(1);
         return r;
     }
@@ -302,7 +306,7 @@ public class conexion {
         int r;
         stmt.registerOutParameter(1,Types.INTEGER);
         stmt.setInt(2 , score);
-        stmt.executeQuery();
+        stmt.execute();
         r = (int) stmt.getInt(1);
         return r;
     }
@@ -314,7 +318,7 @@ public class conexion {
         
         int r;
         stmt.registerOutParameter(1,Types.INTEGER);
-        stmt.executeQuery();
+        stmt.execute();
         r = (int) stmt.getInt(1);
         return r;
     }
@@ -326,7 +330,7 @@ public class conexion {
         int r;
         stmt.registerOutParameter(1,Types.INTEGER);
         stmt.setString(2 , pname);
-        stmt.executeQuery();
+        stmt.execute();
         r = (int) stmt.getInt(1);
         return r;
     }
@@ -461,12 +465,11 @@ public class conexion {
     
     public static void InsertPerson(int pid, String pname, String plastName, String pbirthdate, String pemail)throws SQLException, ParseException{
         con = (Connection) DriverManager.getConnection(urlPE, user, pass);
-        CallableStatement stmt = con.prepareCall("{ call insert_person(?,?,?,?,?)}");
-         stmt.setInt(1,pid);
-         stmt.setString(2,pname);
-         stmt.setString(3,plastName);
-         stmt.setString(4,pbirthdate);
-         stmt.setString(5,pemail);
+        CallableStatement stmt = con.prepareCall("{ call insert_person(?,?,?,?)}");
+         stmt.setString(1,pname);
+         stmt.setString(2,plastName);
+         stmt.setString(3,pbirthdate);
+         stmt.setString(4,pemail);
          stmt.execute();
     }
     
@@ -484,7 +487,7 @@ public class conexion {
         CallableStatement stmt = con.prepareCall("{?= call get_relationship_id(?)}");
         stmt.registerOutParameter(1, Types.INTEGER);
         stmt.setString(2,pdescription);
-        stmt.executeQuery();
+        stmt.execute();
         int r = (int) stmt.getInt(1);
         return r;
        }
@@ -498,7 +501,7 @@ public class conexion {
         CallableStatement stmt = con.prepareCall("{?= call getpersonmaxid()}");
         stmt.registerOutParameter(1, OracleTypes.INTEGER);
 
-        stmt.executeQuery();
+        stmt.execute();
         int r = (int) stmt.getInt(1);
         return r;
        }
@@ -534,7 +537,7 @@ public class conexion {
     
     public static void UpdatePersonEmail(int pid,String pemail)throws SQLException{   
         con = (Connection) DriverManager.getConnection(urlPE, user, pass);
-        CallableStatement stmt = con.prepareCall("{= call control_person.update_person_email(?,?)}");
+        CallableStatement stmt = con.prepareCall("{ call update_person_email(?,?)}");
          stmt.setInt(1,pid);
          stmt.setString(2,pemail);
          stmt.execute();
@@ -542,7 +545,7 @@ public class conexion {
     
      public static void RemovePerson(int pid)throws SQLException{   
         con = (Connection) DriverManager.getConnection(urlPE, user, pass);
-        CallableStatement stmt = con.prepareCall("{ call control_person.remove_person(?)}");
+        CallableStatement stmt = con.prepareCall("{ call remove_person(?)}");
          stmt.setInt(1,pid);
          stmt.execute();
     }
@@ -596,4 +599,792 @@ public class conexion {
         stmt.setInt(2,pid_person);
         stmt.execute();
        }
-}
+        
+        
+        /*******************************************Show and lists********************************************/
+        public static DefaultTableModel showBooks()throws SQLException{   
+
+        
+        
+        String data [] = new String[6];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Title");
+        modelo.addColumn("Editorial");
+        modelo.addColumn("Edition");
+        modelo.addColumn("Author");
+        modelo.addColumn("Score");
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{ call show_books()}");
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString(1);
+               data [1] = r.getString(2);
+               data [2] = r.getString(3);
+               data [3] = r.getString(4);
+               data [4] = r.getString(5);
+               data [5] = r.getString(6);
+                modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        
+
+        return modelo;
+   }
+        
+        
+        
+        
+        
+        
+   public static DefaultTableModel showAuthors()throws SQLException{   
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{ call show_authors()}");
+
+        String data [] = new String[2];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Name");
+
+   
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString("id_author");
+               data [1] = r.getString("name");
+                 
+                
+                 
+                 modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        
+
+        return modelo;
+   }
+   
+   
+   public static DefaultTableModel showCalification()throws SQLException{   
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+
+
+        
+        String data [] = new String[2];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Score");
+
+        CallableStatement stmt = con.prepareCall("{ call show_califications()}");
+
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString("id_calification");
+               data [1] = r.getString("score");
+                 
+                
+                 
+                 modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        
+
+       return modelo;
+   }
+   
+   
+   public static DefaultTableModel showEditorial()throws SQLException{   
+  con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        
+        
+        String data [] = new String[2];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Editorial");
+
+
+        CallableStatement stmt = con.prepareCall("{ call show_editorial()}");
+
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString("id_editorial");
+               data [1] = r.getString("description");
+                 
+                
+                 
+                 modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        
+
+        return modelo;
+   
+   }
+   
+   
+   public static DefaultTableModel showgenre()throws SQLException{   
+   String data [] = new String[2];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Genre");
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{ call show_genre()}");
+
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString("id_genre");
+               data [1] = r.getString("description");
+               System.out.println(r.getString("id_genre")); 
+               System.out.println(r.getString("description"));
+
+                 
+                
+                 
+                 modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        
+
+        return modelo;
+    }
+   
+   
+ 
+   public static DefaultTableModel showrelationship()throws SQLException{   
+       con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+       
+       CallableStatement stmt = con.prepareCall("{ call show_relationship()}");
+
+       String data [] = new String[2];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("relationship");
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString("id_relationship");
+               data [1] = r.getString("description");
+                 
+                
+                 
+                 modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        
+
+        return modelo;
+    }
+   
+   
+   public static DefaultTableModel showphone()throws SQLException{
+   
+    String data [] = new String[2];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Phone");
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{ call show_phone()}");
+
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString("id_phone");
+               data [1] = r.getString("phone_number");
+                 
+                
+                 
+                 modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        
+
+        return modelo;
+    }
+   
+   /************************************************************************************************************************************************/
+   public static ArrayList showrelationshipList()throws SQLException{   
+     con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        
+        
+        ArrayList<String> lista = new ArrayList();
+
+        CallableStatement stmt = con.prepareCall("{ call show_relationship()}");
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               
+               lista.add(r.getString("description"));
+                 
+                
+                 
+                 
+             
+                 
+                
+                 
+                 
+             }
+        
+
+        return lista;
+    }
+   
+   
+   public static ArrayList EditionList()throws SQLException{   
+
+        
+        
+        ArrayList editionList = new ArrayList();
+        
+        
+
+
+         con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{ call show_edition()}");
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+              
+               editionList.add(r.getString("description"));
+                
+             }
+        
+
+        return editionList;
+    }
+   
+   
+   
+   public static ArrayList AuthorList()throws SQLException{   
+
+        
+        ArrayList editionList = new ArrayList();
+        
+        
+
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{ call show_authors()}");
+
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+              
+               editionList.add(r.getString("name"));
+                
+             }
+        
+
+        return editionList;
+    }
+   
+   
+   public static ArrayList ScoreList()throws SQLException{   
+
+        
+        ArrayList editionList = new ArrayList();
+        
+        
+
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{ call show_califications()}");
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+              
+               editionList.add(r.getString("score"));
+                
+             }
+        
+
+        return editionList;
+    }
+   
+   
+   public static ArrayList editorialList()throws SQLException{   
+
+        
+        
+        ArrayList editionList = new ArrayList();
+        
+        
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+
+        CallableStatement stmt = con.prepareCall("{ call show_editorial()}");
+
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+              
+               editionList.add(r.getString("description"));
+                
+             }
+        
+
+        return editionList;
+    }
+   
+   
+   
+   
+   
+    public static DefaultTableModel showUserKnownPersons(int pid_user)throws SQLException{   
+
+        
+        String data [] = new String[6];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID Person");
+        modelo.addColumn("Name");
+        modelo.addColumn("Last Name");
+        modelo.addColumn("Relationship");
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{ call showPersonRelations(?)}");
+
+
+
+
+        stmt.setInt(1,pid_user);
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString(1);
+               data [1] = r.getString(2);
+               data [2] = r.getString(3);
+               data [3] = r.getString(4);
+
+                modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        
+
+        return modelo;
+   }
+   
+    public static DefaultTableModel showUnknownPersons()throws SQLException{
+
+
+        String data [] = new String[3];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("First Name");
+        modelo.addColumn("Last Name");
+        
+         con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{ call show_persons()}");
+
+
+        
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+
+               data [0] = r.getString(1);
+               data [1] = r.getString(2);
+               data [2] = r.getString(3);
+
+                       modelo.addRow(data);
+             }
+        return modelo;
+    }
+   
+   
+   
+   
+   
+   /*******************************************************************************************************/
+    public static ArrayList UserAvBooksList(int pid_user)throws SQLException{   
+
+        
+        String.valueOf("inicia libros lista");
+        ArrayList editionList = new ArrayList();
+        
+        
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{ call showUserAvailableBook(?)}");
+        String.valueOf("Paso el llamado de libros lista");
+
+        stmt.setInt(1, pid_user);
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        String.valueOf("Se armo el result set usuarios lista");
+        while(r.next()){
+                 
+              
+               editionList.add(r.getString(1)+'-'+r.getString(2));
+                
+             }
+        
+        String.valueOf("antes del return de libroslista");
+        return editionList;
+    }
+   
+   
+    
+    
+    
+    public static ArrayList UserKnonwList(int pid_user)throws SQLException{   
+
+        String.valueOf("inicia usuarios lista");
+        ArrayList editionList = new ArrayList();
+        
+        
+        
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{ call showPersonRelations(?)}");
+
+         String.valueOf("Paso el llamado de usarios lista");
+
+        stmt.setInt(1, pid_user);
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        String.valueOf("Se armo el result set usuarios lista");
+        while(r.next()){
+                 
+              
+               editionList.add(r.getString(1)+'-'+r.getString(2)+' '+r.getString(3));
+                
+             }
+        String.valueOf("antes del return de usuaarios lista");
+
+        return editionList;
+    }
+   
+   
+    
+    public static DefaultTableModel showUserReturnedBooks(int pid_user)throws SQLException{   
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        String data [] = new String[6];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID Loan");
+        modelo.addColumn("Title");
+        modelo.addColumn("First name");
+        modelo.addColumn("Last name");
+        modelo.addColumn("Load date");
+        modelo.addColumn("Return date");
+
+
+        CallableStatement stmt = con.prepareCall("{ call showUserReturnedBook(?)}");
+
+
+
+
+        stmt.setInt(1,pid_user);
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString(1);
+               data [1] = r.getString(2);
+               data [2] = r.getString(3);
+               data [3] = r.getString(4);
+               data [4] = r.getString(5);
+               data [5] = r.getString(6);
+                modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        
+
+        return modelo;
+   }
+    
+    
+    
+    public static DefaultTableModel showUserNotReturnedBooks(int pid_user)throws SQLException{   
+
+        
+        
+        String data [] = new String[6];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID Loan");
+        modelo.addColumn("Title");
+        modelo.addColumn("First name");
+        modelo.addColumn("Last name");
+        modelo.addColumn("Load date");
+        modelo.addColumn("Return date");
+
+         con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{ call showUserNotReturnedBook(?)}");
+
+
+
+
+        stmt.setInt(1,pid_user);
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString(1);
+               data [1] = r.getString(2);
+               data [2] = r.getString(3);
+               data [3] = r.getString(4);
+               data [4] = r.getString(5);
+               data [5] = r.getString(6);
+                modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        
+
+        return modelo;
+   }
+    
+    /**************************************************************************************************************/
+    public static DefaultTableModel showNotReturnedBooks()throws SQLException{   
+
+              
+        String data [] = new String[6];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID Loan");
+        modelo.addColumn("Title");
+        modelo.addColumn("First name");
+        modelo.addColumn("Last name");
+        modelo.addColumn("Load date");
+        modelo.addColumn("Return date");
+      
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{ call showNotReturnedBook()}");
+
+
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString(1);
+               data [1] = r.getString(2);
+               data [2] = r.getString(3);
+               data [3] = r.getString(4);
+               data [4] = r.getString(5);
+               data [5] = r.getString(6);
+             
+                modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        
+
+        return modelo;
+   }
+    
+    
+    public static DefaultTableModel showReturnedBooks()throws SQLException{   
+
+          
+        String data [] = new String[6];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID Book");
+        modelo.addColumn("Title");
+
+     
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{call showReturnedBook()}");
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString(1);
+               data [1] = r.getString(2);
+
+              
+                modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        return modelo;
+     }
+    
+    
+    
+    
+    
+    public static DefaultTableModel showBinnacle()throws SQLException{   
+
+              
+        String data [] = new String[7];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID ");
+        modelo.addColumn("Change type");
+        modelo.addColumn("Table name");
+        modelo.addColumn("Field name");
+        modelo.addColumn("Previous value");
+        modelo.addColumn("Current value");
+        modelo.addColumn("Date");
+      
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{ call showBinnacle()}");
+
+
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString(1);
+               data [1] = r.getString(2);
+               data [2] = r.getString(3);
+               data [3] = r.getString(4);
+               data [4] = r.getString(5);
+               data [5] = r.getString(6);
+               data [6] = r.getString(7);
+                modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        
+
+        return modelo;
+    
+    
+    
+    }
+    
+    
+    
+   }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+
+

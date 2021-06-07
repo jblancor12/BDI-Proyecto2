@@ -22,7 +22,7 @@ DROP procedure IF EXISTS `remove_bookxauthor`;
 
 DELIMITER $$
 USE `pe`$$
-CREATE PROCEDURE `remove_bookxauthor`(pid_author INT, pid_book INT)
+CREATE PROCEDURE `remove_bookxauthor`( pid_book INT)
 BEGIN
 DECLARE EXIT HANDLER FOR SQLEXCEPTION
 BEGIN
@@ -30,7 +30,7 @@ BEGIN
     SELECT 'An error has occurred';
 END;
 	delete from bookxauthor
-    where  id_book = pid_book AND id_author = pid_author;
+    where  id_book = pid_book;
 END$$
 
 DELIMITER ;

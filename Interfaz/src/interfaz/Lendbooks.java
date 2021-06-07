@@ -278,8 +278,11 @@ public class Lendbooks extends javax.swing.JDialog {
         ArrayList<String> personas;
         System.out.println(inicio.id_user);
         try {
-            libros = connect.connectdbp.UserAvBooksList(inicio.id_user);
-            personas = connect.connectdbp.UserKnonwList(inicio.id_user);
+            System.out.println("armar listas");
+            libros = connectMysql.conexion.UserAvBooksList(inicio.id_user);
+            personas = connectMysql.conexion.UserKnonwList(inicio.id_user);
+            String.valueOf(libros.size());
+            String.valueOf(personas.size());
             LBBooksCB.removeAllItems();
             LBPersonCB.removeAllItems();
             for (String i: libros) {
@@ -371,7 +374,7 @@ public class Lendbooks extends javax.swing.JDialog {
         // TODO add your handling code here:
         if(LendChoiceCB.getSelectedItem().equals("Returned")){
             try {
-                jTable1.setModel(connect.connectdbp.showUserReturnedBooks(inicio.id_user));
+                jTable1.setModel(connectMysql.conexion.showUserReturnedBooks(inicio.id_user));
             } catch (SQLException ex) {
                 Logger.getLogger(Lendbooks.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -382,7 +385,7 @@ public class Lendbooks extends javax.swing.JDialog {
     }
         else if(LendChoiceCB.getSelectedItem().equals("Not Returned")){
             try {
-                jTable1.setModel(connect.connectdbp.showUserNotReturnedBooks(inicio.id_user));
+                jTable1.setModel(connectMysql.conexion.showUserNotReturnedBooks(inicio.id_user));
             } catch (SQLException ex) {
                 Logger.getLogger(Lendbooks.class.getName()).log(Level.SEVERE, null, ex);
             }

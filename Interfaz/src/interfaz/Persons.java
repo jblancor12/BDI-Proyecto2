@@ -106,7 +106,7 @@ public class Persons extends javax.swing.JDialog {
 
         jLabel7.setText("Email");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Known", "Unknown" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Known", "All" }));
 
         PersonsButton.setText("Persons");
         PersonsButton.addActionListener(new java.awt.event.ActionListener() {
@@ -301,12 +301,12 @@ public class Persons extends javax.swing.JDialog {
         // TODO add your handling code here:
         DefaultTableModel modelo;
           try {
-              if(jComboBox1.getSelectedItem().equals("Unknown")){
-              modelo =connect.connectdbp.showUnknownPersons(inicio.id_user);
+              if(jComboBox1.getSelectedItem().equals("All")){
+              modelo =connectMysql.conexion.showUnknownPersons();
               jTable1.setModel(modelo);
               }
               else if(jComboBox1.getSelectedItem().equals("Known")){
-                  modelo = connect.connectdbp.showUserKnownPersons(inicio.id_user);
+                  modelo = connectMysql.conexion.showUserKnownPersons(inicio.id_user);
                   jTable1.setModel(modelo);
               }
              } catch (SQLException ex) {
@@ -318,7 +318,7 @@ public class Persons extends javax.swing.JDialog {
         // TODO add your handling code here:
         RelationshipCB.removeAllItems();
         try {
-            ArrayList<String> lista = connect.connectdbp.showrelationshipList();
+            ArrayList<String> lista = connectMysql.conexion.showrelationshipList();
             for (String i: lista){
                 RelationshipCB.addItem(i);
             }

@@ -206,10 +206,10 @@ public class Books extends javax.swing.JDialog {
                 ArrayList<String> score;
                 ArrayList<String> author;
         try {
-            edition = connect.connectdbp.EditionList();
-            editorial = connect.connectdbp.editorialList();
-            score = connect.connectdbp.ScoreList();
-            author = connect.connectdbp.AuthorList();
+            edition = connectMysql.conexion.EditionList();
+            editorial = connectMysql.conexion.editorialList();
+            score = connectMysql.conexion.ScoreList();
+            author = connectMysql.conexion.AuthorList();
             BooksEditionCB.removeAllItems();
             BooksScoreCB.removeAllItems();
             BooksEditorialCB.removeAllItems();
@@ -238,22 +238,23 @@ public class Books extends javax.swing.JDialog {
     private void BooksExecuteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BooksExecuteButtonActionPerformed
         try {
             // TODO add your handling code here:
-            System.out.println(BooksEditorialCB.getSelectedItem().toString());
-            System.out.println(connectMysql.conexion.getEditorialId(BooksEditorialCB.getSelectedItem().toString()));
+            /*System.out.println(BooksEditorialCB.getSelectedItem().toString());
+            /*System.out.println(connectMysql.conexion.getEditorialId(BooksEditorialCB.getSelectedItem().toString()));*/
             if(BooksActionCB.getSelectedItem().equals("Insert")){
                 
             
-            int idEditorial = connectMysql.conexion.getEditorialId(BooksEditorialCB.getSelectedItem().toString());
+           
             int idEdition = connectMysql.conexion.getEditionId(BooksEditionCB.getSelectedItem().toString());
             int idScore = connectMysql.conexion.getScoreId(BooksScoreCB.getSelectedItem().toString());
             int newBookId = connectMysql.conexion.bookMaxId();
             int idAutor = connectMysql.conexion.getAutorId(BooksAuthorCB.getSelectedItem().toString());
+            int idEditorial = connectMysql.conexion.getEditorialId(BooksEditorialCB.getSelectedItem().toString());
             String title = BooksTitleTF.getText();
             System.out.println(newBookId);
             
             connectMysql.conexion.InsertBook(title, idEditorial, idEdition, idScore);
             connectMysql.conexion.InsertBookxAuthor(newBookId, idAutor);
-            connectMysql.conexion.InsertPersonOwnBook(newBookId, id_user);
+            connectMysql.conexion.InsertPersonOwnBook(id_user,newBookId);
             
             }
             else if(BooksActionCB.getSelectedItem().equals("Update")){
@@ -290,7 +291,7 @@ public class Books extends javax.swing.JDialog {
     private void BooksSeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BooksSeeButtonActionPerformed
         try {
             // TODO add your handling code here:
-            DefaultTableModel modelo = connect.connectdbp.showBooks();
+            DefaultTableModel modelo = connectMysql.conexion.showBooks();
             jTable1.setModel(modelo);
         } catch (SQLException ex) {
             Logger.getLogger(Books.class.getName()).log(Level.SEVERE, null, ex);

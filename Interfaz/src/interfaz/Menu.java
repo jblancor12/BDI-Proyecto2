@@ -35,6 +35,7 @@ public class Menu extends javax.swing.JDialog {
         PersonsButtons = new javax.swing.JButton();
         QueriesButtons = new javax.swing.JButton();
         Lend_BooksButton = new javax.swing.JButton();
+        BinnacleButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -73,6 +74,13 @@ public class Menu extends javax.swing.JDialog {
             }
         });
 
+        BinnacleButton.setText("Binnacle");
+        BinnacleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BinnacleButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,17 +89,21 @@ public class Menu extends javax.swing.JDialog {
                 .addGap(159, 159, 159)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Lend_BooksButton)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(CatalogsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PersonsButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(QueriesButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BooksButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(BinnacleButton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(CatalogsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(PersonsButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(QueriesButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BooksButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(168, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(87, 87, 87)
+                .addGap(44, 44, 44)
+                .addComponent(BinnacleButton)
+                .addGap(18, 18, 18)
                 .addComponent(CatalogsButton)
                 .addGap(29, 29, 29)
                 .addComponent(BooksButton)
@@ -139,6 +151,12 @@ public class Menu extends javax.swing.JDialog {
         vqueries.setVisible(true);
     }//GEN-LAST:event_QueriesButtonsActionPerformed
 
+    private void BinnacleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BinnacleButtonActionPerformed
+        // TODO add your handling code here:
+        binnacle vbinnacle = new binnacle(v1,true);
+        vbinnacle.setVisible(true);
+    }//GEN-LAST:event_BinnacleButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -182,6 +200,7 @@ public class Menu extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BinnacleButton;
     private javax.swing.JButton BooksButton;
     private javax.swing.JButton CatalogsButton;
     private javax.swing.JButton Lend_BooksButton;

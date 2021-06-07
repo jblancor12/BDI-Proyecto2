@@ -163,30 +163,30 @@ public class catalogos extends javax.swing.JDialog {
         
          try {
              if (CatalogsCB.getSelectedItem()=="Author"){
-             modelo =connect.connectdbp.showAuthors();
+             modelo =connectMysql.conexion.showAuthors();
               jTable1.setModel(modelo);
              }
              else if (CatalogsCB.getSelectedItem().equals("Calification")){
                  System.out.println("Calification");
-                 modelo = connect.connectdbp.showCalification();
+                 modelo = connectMysql.conexion.showCalification();
                  jTable1.setModel(modelo);
              }
              else if(CatalogsCB.getSelectedItem()=="Editorial"){
-                 modelo = connect.connectdbp.showEditorial();
+                 modelo = connectMysql.conexion.showEditorial();
                  jTable1.setModel(modelo);
              }
              else if(CatalogsCB.getSelectedItem()=="Genre"){
-                 modelo = connect.connectdbp.showgenre();
+                 modelo = connectMysql.conexion.showgenre();
                  jTable1.setModel(modelo);
              }
 
              else if(CatalogsCB.getSelectedItem()=="Phone"){
-                 modelo = connect.connectdbp.showphone();
+                 modelo = connectMysql.conexion.showphone();
                  jTable1.setModel(modelo);
              }
              else if(CatalogsCB.getSelectedItem().equals("Relationship")){
                  System.out.println("Relationship");
-                 modelo = connect.connectdbp.showrelationship();
+                 modelo = connectMysql.conexion.showrelationship();
                  jTable1.setModel(modelo);
              }
              
