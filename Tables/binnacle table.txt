@@ -160,21 +160,96 @@ BEGIN
 END$$
 DELIMITER ;
 
+DROP TRIGGER IF EXISTS `pe`.`genre_AFTER_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER=`root`@`localhost` TRIGGER `genre_AFTER_UPDATE` AFTER UPDATE ON `genre` FOR EACH ROW BEGIN
+	insert into binnacle(change_type,table_name,field_name,previous_value, current_value)
+	values('update','genre','description',old.description, new.description);
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`genre_BEFORE_DELETE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`genre_BEFORE_DELETE` BEFORE DELETE ON `genre` FOR EACH ROW
+BEGIN
+	insert into binnacle(change_type,table_name,field_name,current_value)
+	values('delete','genre','description',description);
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`genre_AFTER_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`genre_AFTER_INSERT` AFTER INSERT ON `genre` FOR EACH ROW
+BEGIN
+	insert into binnacle(change_type,table_name,field_name,current_value)
+	values('insert','genre','description',new.description);
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS `pe`.`phone_AFTER_UPDATE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER=`root`@`localhost` TRIGGER `phone_AFTER_UPDATE` AFTER UPDATE ON `phone` FOR EACH ROW BEGIN
+	insert into binnacle(change_type,table_name,field_name,previous_value, current_value)
+	values('update','phone','phone_number',old.phone_number, new.phone_number);
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`phone_BEFORE_DELETE`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`phone_BEFORE_DELETE` BEFORE DELETE ON `phone` FOR EACH ROW
+BEGIN
+	insert into binnacle(change_type,table_name,field_name,current_value)
+	values('delete','phone','phone_number',phone_number);
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`phone_AFTER_INSERT`;
+
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`phone_AFTER_INSERT` AFTER INSERT ON `phone` FOR EACH ROW
+BEGIN
+	insert into binnacle(change_type,table_name,field_name,current_value)
+	values('insert','phone','phone_number',new.phone_number);
+END$$
+DELIMITER ;
 
 
+DROP TRIGGER IF EXISTS `pe`.`relationship_AFTER_UPDATE`;
 
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER=`root`@`localhost` TRIGGER `relationship_AFTER_UPDATE` AFTER UPDATE ON `relationship` FOR EACH ROW BEGIN
+	insert into binnacle(change_type,table_name,field_name,previous_value, current_value)
+	values('update','relationship','description',old.description, new.description);
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`relationship_AFTER_INSERT`;
 
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`relationship_AFTER_INSERT` AFTER INSERT ON `relationship` FOR EACH ROW
+BEGIN
+	insert into binnacle(change_type,table_name,field_name,current_value)
+	values('update','relationship','description',new.description);
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `pe`.`relationship_BEFORE_DELETE`;
 
-
-
-
-
-
-
-
-
-
-
+DELIMITER $$
+USE `pe`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `pe`.`relationship_BEFORE_DELETE` BEFORE DELETE ON `relationship` FOR EACH ROW
+BEGIN
+	insert into binnacle(change_type,table_name,field_name,current_value)
+	values('update','relationship','description',description);
+END$$
+DELIMITER ;
 
 
 
