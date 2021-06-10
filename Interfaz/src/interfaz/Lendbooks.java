@@ -303,30 +303,13 @@ public class Lendbooks extends javax.swing.JDialog {
 
     private void LendBooksExeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LendBooksExeButtonActionPerformed
         // TODO add your handling code here:
-        String id_book ="";
-        String id_person = "";
+       
         String libro = String.valueOf(LBBooksCB.getSelectedItem());
         String person = String.valueOf(LBPersonCB.getSelectedItem());
- 
+        int id_book =logica.logica.extractId(libro);
+        int id_person = logica.logica.extractId(person);
         
-        for(int i=0; i<= libro.length()-1;i++){
-            if(libro.substring(i, i+1).equals("-")){
-                break;
-            }
-            else{
-               id_book =id_book + libro.substring(i, i+1);
-            }
-            
-        
-    }
-        for(int i=0; i<= person.length()-1;i++){
-            if(person.substring(i, i+1).equals("-")){
-                break;
-            }
-            else{
-               id_person =id_person + person.substring(i, i+1);
-            }
-        }
+
         System.out.println(id_person);
         System.out.println(id_book);
         
@@ -347,9 +330,9 @@ public class Lendbooks extends javax.swing.JDialog {
             System.out.println(return_date);
             try {
                 if(LBBooksCB.getSelectedItem()!=null){
-                connectMysql.conexion.UpdatePBBBook(id_loan, Integer.valueOf(id_book));
+                connectMysql.conexion.UpdatePBBBook(id_loan, id_book);
                 }
-                connectMysql.conexion.UpdatePBBPerson(id_loan, Integer.valueOf(id_person));
+                connectMysql.conexion.UpdatePBBPerson(id_loan, id_person);
                 if(loan_date.equals("-/-/-")){
                     System.out.println(loan_date);
                 }

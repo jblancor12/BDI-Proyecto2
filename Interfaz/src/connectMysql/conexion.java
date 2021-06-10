@@ -1350,6 +1350,77 @@ public class conexion {
     
     }
     
+    public static DefaultTableModel topLendedBooks(int n)throws SQLException{   
+
+          
+        String data [] = new String[6];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID Book");
+        modelo.addColumn("Title");
+
+     
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{call topLendedBooks(?)}");
+
+
+        stmt.setInt(1,n);
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString(1);
+               data [1] = r.getString(2);
+
+              
+                modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        return modelo;
+     }
+    
+    
+        public static DefaultTableModel LendedBooksOT(int n, int m)throws SQLException{   
+
+          
+        String data [] = new String[6];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID Book");
+        modelo.addColumn("Title");
+ 
+     
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{call LendedBooksOT(?,?)}");
+
+
+        stmt.setInt(1,n);
+        stmt.setInt(2,m);
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString(1);
+               data [1] = r.getString(2);
+
+              
+                modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        return modelo;
+     }
+    
+    
+    
+    
     
     
    }

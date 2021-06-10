@@ -122,9 +122,9 @@ public class inicio extends javax.swing.JFrame {
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
         try {
             id_user = connectMysql.conexion.getUserId(usernameTextField.getText());
-            String r1 = connectMysql.conexion.getPassword(id_user);
+
             String r2 = passwordTextField.getText();
-            if(r1.equals(r2)){
+            if(logica.logica.validPassword(id_user, r2)){
                 System.out.println(id_user);
                 Menu M = new Menu(this, true);
                 M.setVisible(true);
@@ -132,8 +132,7 @@ public class inicio extends javax.swing.JFrame {
 
                 
             }
-            System.out.println(r1);
-            System.out.println(r2);
+
             
         } catch (SQLException ex) {
             Logger.getLogger(inicio.class.getName()).log(Level.SEVERE, null, ex);
