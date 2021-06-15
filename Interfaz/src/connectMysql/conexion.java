@@ -1411,6 +1411,7 @@ public class conexion {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID Book");
         modelo.addColumn("Title");
+        modelo.addColumn("N");
 
      
 
@@ -1425,6 +1426,7 @@ public class conexion {
                  
                data [0] = r.getString(1);
                data [1] = r.getString(2);
+               data [2] = r.getString(3);
 
               
                 modelo.addRow(data);
@@ -1445,6 +1447,7 @@ public class conexion {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID Book");
         modelo.addColumn("Title");
+        modelo.addColumn("n");
  
      
 
@@ -1460,6 +1463,7 @@ public class conexion {
                  
                data [0] = r.getString(1);
                data [1] = r.getString(2);
+               data [2] = r.getString(3);
 
               
                 modelo.addRow(data);
