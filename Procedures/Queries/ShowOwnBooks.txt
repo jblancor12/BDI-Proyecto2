@@ -1,0 +1,8 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `show_show_ownbooks`(pid_user int)
+BEGIN
+select  a.title
+from book a
+join personownsbook b
+on a.id_book = b.id_book
+where b.id_person = pid_user;
+END

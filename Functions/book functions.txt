@@ -114,7 +114,13 @@ DELIMITER ;
 
 
 
-
+CREATE DEFINER=`root`@`localhost` FUNCTION `getbookmaxid`() RETURNS int(11)
+    DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select Max(id_book) from book);
+RETURN vcName;
+END
 
 
 

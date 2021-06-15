@@ -1,0 +1,10 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `BooksPerGenre`()
+BEGIN
+
+select a.description, count(1) 
+from genre a
+join bookxgenre b
+on a.id_genre =b.id_genre
+group by a.description;
+ 
+end

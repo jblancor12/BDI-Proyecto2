@@ -1,0 +1,28 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AgePersons`()
+BEGIN
+
+select  CASE
+    when age<=18 then '0-18'
+    when age<=30 then '19-30'
+    when age <=45 then '31-45'
+    when age<=60 then '46-60'
+    when age <=75 then '61-75'
+    else '75+'
+    end as age,
+    count(*) as n
+from(
+select  distinct TIMESTAMPDIFF(MONTH, a.birthday, curdate())/12 as age
+from person a
+join personborrowsbook b
+on a.id_person=b.id_person)  as age1
+group by CASE
+    when age<=18 then '0-18'
+    when age<=30 then '19-30'
+    when age <=45 then '31-45'
+    when age<=60 then '46-60'
+    when age <=75 then '61-75'
+    else '75+'
+    end;
+
+ 
+end

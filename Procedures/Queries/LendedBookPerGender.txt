@@ -1,0 +1,13 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `LendedbookPerGender`()
+BEGIN
+
+select a.description, count(1) 
+from genre a
+join bookxgenre b
+on a.id_genre =b.id_genre
+join personborrowsbook c 
+on b.id_book = c.id_book
+group by a.description;
+
+ 
+end

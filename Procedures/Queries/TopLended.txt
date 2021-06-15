@@ -1,0 +1,12 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `topLendedBooks`(n int)
+BEGIN
+
+select a.id_book, a.title, count(1)
+from book a
+join personborrowsbook b
+on a.id_book = b.id_book 
+group by b.id_book DESC
+Limit n;
+ 
+
+END

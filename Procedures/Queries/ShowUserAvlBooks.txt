@@ -1,0 +1,17 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `showUserAvailableBook`(pid_user int)
+BEGIN
+select a.id_book, a.title 
+from book a 
+join personownsbook b
+on a.id_book = b.id_book
+left  join personborrowsbook c
+on b.id_book = c.id_book
+where b.id_person = pid_user and a.id_book not in(
+select Distinct (a.id_book)
+from book a 
+join personownsbook b
+on a.id_book = b.id_book
+right  join personborrowsbook c
+on b.id_book = c.id_book
+where b.id_person = pid_user and c.return_date is null);
+END

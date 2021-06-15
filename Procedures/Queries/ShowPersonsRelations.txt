@@ -1,0 +1,10 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `showPersonRelations`(pid_user int)
+BEGIN
+select b.id_person, b.first_name, b.last_name, c.description
+from personknowsperson a
+join person b 
+on a.id_person2 = b.id_person
+join relationship c
+on a.id_relationship = c.id_relationship
+where a.id_person1 = pid_user;
+END

@@ -36,6 +36,7 @@ public class Menu extends javax.swing.JDialog {
         QueriesButtons = new javax.swing.JButton();
         Lend_BooksButton = new javax.swing.JButton();
         BinnacleButton = new javax.swing.JButton();
+        StadisticsButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -81,6 +82,13 @@ public class Menu extends javax.swing.JDialog {
             }
         });
 
+        StadisticsButton.setText("Stadistics");
+        StadisticsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StadisticsButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -88,14 +96,15 @@ public class Menu extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(159, 159, 159)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Lend_BooksButton)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(BinnacleButton)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(CatalogsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(PersonsButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(QueriesButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BooksButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(BooksButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(StadisticsButton))
+                    .addComponent(Lend_BooksButton))
                 .addContainerGap(168, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -109,11 +118,13 @@ public class Menu extends javax.swing.JDialog {
                 .addComponent(BooksButton)
                 .addGap(27, 27, 27)
                 .addComponent(PersonsButtons)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(Lend_BooksButton)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(QueriesButtons)
-                .addGap(29, 29, 29))
+                .addGap(28, 28, 28)
+                .addComponent(StadisticsButton)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
@@ -156,6 +167,12 @@ public class Menu extends javax.swing.JDialog {
         binnacle vbinnacle = new binnacle(v1,true);
         vbinnacle.setVisible(true);
     }//GEN-LAST:event_BinnacleButtonActionPerformed
+
+    private void StadisticsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StadisticsButtonActionPerformed
+        // TODO add your handling code here:
+        Stadistics vStadistic = new Stadistics(v1,true);
+        vStadistic.setVisible(true);
+    }//GEN-LAST:event_StadisticsButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,5 +223,6 @@ public class Menu extends javax.swing.JDialog {
     private javax.swing.JButton Lend_BooksButton;
     private javax.swing.JButton PersonsButtons;
     private javax.swing.JButton QueriesButtons;
+    private javax.swing.JButton StadisticsButton;
     // End of variables declaration//GEN-END:variables
 }

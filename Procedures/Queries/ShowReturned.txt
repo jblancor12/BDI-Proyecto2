@@ -1,0 +1,13 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `showReturnedBook`()
+BEGIN
+
+select distinct b.id_loan,a.title , c.first_name, c.last_name, b.loan_date, b.return_date
+from book a 
+join personborrowsbook b
+on a.id_book = b.id_book
+join person c 
+on b.id_person = c.id_person
+join personownsbook d
+on a.id_book = d.id_book
+where  b.return_date is not null;
+END

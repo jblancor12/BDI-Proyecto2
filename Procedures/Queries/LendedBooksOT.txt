@@ -1,0 +1,12 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `LendedBooksOT`(n int, m int)
+BEGIN
+
+select a.id_book, a.title, count(1) 
+from book a
+join personborrowsbook b
+on a.id_book = b.id_book 
+where TIMESTAMPDIFF(MONTH, b.loan_date, curdate()) <m
+group by b.id_book DESC
+having count(1)>n;
+ 
+end

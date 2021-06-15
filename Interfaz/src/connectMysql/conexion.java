@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import oracle.jdbc.OracleTypes;
+import org.jfree.data.general.DefaultPieDataset;
 /**
  *
  * @author andres
@@ -1418,9 +1419,181 @@ public class conexion {
         return modelo;
      }
     
+        
+        
+       public static DefaultTableModel AgePersonsQ()throws SQLException{   
+
+          
+        String data [] = new String[6];
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Age");
+        modelo.addColumn("Persons");
+ 
+     
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{call AgePersons()}");
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+               data [0] = r.getString(1);
+               data [1] = r.getString(2);
+
+              
+                modelo.addRow(data);
+             
+                 
+                
+                 
+                 
+             }
+        return modelo;
+     }
+    
+    
+       
+    public static DefaultPieDataset AgePersonsS()throws SQLException{   
+
+          
+       DefaultPieDataset dataset = new DefaultPieDataset();
+ 
+     
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{call AgePersonsB()}");
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                  dataset.setValue(r.getString(1), r.getInt(2));
+
+             
+                 
+                
+                 
+                 
+             }
+        return dataset;
+     }
+    
+    public static DefaultPieDataset BooksPerGender()throws SQLException{   
+
+          
+       DefaultPieDataset dataset = new DefaultPieDataset();
+ 
+     
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{call BooksPerGenre()}");
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                  dataset.setValue(r.getString(1), r.getInt(2));
+
+             
+                 
+                
+                 
+                 
+             }
+        return dataset;
+     }
     
     
     
+    
+    public static DefaultPieDataset LendedBooksPerGender()throws SQLException{   
+
+          
+       DefaultPieDataset dataset = new DefaultPieDataset();
+ 
+     
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{call LendedBookPerGender()}");
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                  dataset.setValue(r.getString(1), r.getInt(2));
+
+             
+                 
+                
+                 
+                 
+             }
+        return dataset;
+     }
+    
+    
+    
+    
+    public static int countLended()throws SQLException{   
+    con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+    CallableStatement stmt = con.prepareCall("{call countLended()}");
+    stmt.executeQuery();
+    ResultSet r =(ResultSet) stmt.getResultSet();
+    int res=0;
+    while(r.next()){
+                  
+        res=r.getInt(1);
+             
+                 
+                
+                 
+                 
+             }
+    return res;
+    }
+    
+    
+    public static int countReturned()throws SQLException{   
+    con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+    CallableStatement stmt = con.prepareCall("{call countReturned()}");
+    stmt.executeQuery();
+    ResultSet r =(ResultSet) stmt.getResultSet();
+     int res=0;
+    while(r.next()){
+                  
+        res=r.getInt(1);
+             
+                 
+                
+                 
+                 
+             }
+    return res;
+    }
+    
+    
+    public static DefaultPieDataset TotalandLended()throws SQLException{   
+
+          
+       DefaultPieDataset dataset = new DefaultPieDataset();
+ 
+     
+                  dataset.setValue("Lended", countLended());
+                  dataset.setValue("Returned", countReturned());
+             
+                 
+                
+                 
+                 
+             
+        return dataset;
+     }
     
     
    }

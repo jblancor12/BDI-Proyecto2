@@ -51,7 +51,7 @@ public class queries extends javax.swing.JDialog {
             }
         });
 
-        QuerieCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lended Books", "Not Lended Books", "Top Lended Books", "Lended Books Over Time" }));
+        QuerieCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lended Books", "Not Lended Books", "Top Lended Books", "Lended Books Over Time", "People Age" }));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -151,6 +151,13 @@ public class queries extends javax.swing.JDialog {
         else if (QuerieCB.getSelectedItem().equals("Lended Books Over Time")){
             try {
                 jTable1.setModel(connectMysql.conexion.LendedBooksOT(Integer.valueOf(number.getText()),Integer.valueOf(month.getText())));
+            } catch (SQLException ex) {
+                Logger.getLogger(queries.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else if (QuerieCB.getSelectedItem().equals("People Age")){
+            try {
+                jTable1.setModel(connectMysql.conexion.AgePersonsQ());
             } catch (SQLException ex) {
                 Logger.getLogger(queries.class.getName()).log(Level.SEVERE, null, ex);
             }

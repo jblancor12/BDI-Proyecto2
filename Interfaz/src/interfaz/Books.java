@@ -246,13 +246,13 @@ public class Books extends javax.swing.JDialog {
            
             int idEdition = connectMysql.conexion.getEditionId(BooksEditionCB.getSelectedItem().toString());
             int idScore = connectMysql.conexion.getScoreId(BooksScoreCB.getSelectedItem().toString());
-            int newBookId = connectMysql.conexion.bookMaxId();
+            
             int idAutor = connectMysql.conexion.getAutorId(BooksAuthorCB.getSelectedItem().toString());
             int idEditorial = connectMysql.conexion.getEditorialId(BooksEditorialCB.getSelectedItem().toString());
             String title = BooksTitleTF.getText();
-            System.out.println(newBookId);
             
             connectMysql.conexion.InsertBook(title, idEditorial, idEdition, idScore);
+            int newBookId = connectMysql.conexion.bookMaxId();
             connectMysql.conexion.InsertBookxAuthor(newBookId, idAutor);
             connectMysql.conexion.InsertPersonOwnBook(id_user,newBookId);
             

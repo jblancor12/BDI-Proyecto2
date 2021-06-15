@@ -140,5 +140,12 @@ END$$
 
 DELIMITER ;
 
-
+/****/
+CREATE DEFINER=`root`@`localhost` FUNCTION `getpersonmaxid`() RETURNS int(11)
+    DETERMINISTIC
+BEGIN
+DECLARE vcName INT;
+SET vcName = (select Max(id_person) from person);
+RETURN vcName;
+END
 
