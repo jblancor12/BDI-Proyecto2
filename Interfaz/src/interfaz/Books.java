@@ -55,10 +55,12 @@ public class Books extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
         BooksExecuteButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        genreCB = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        BooksActionCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Insert", "Update", "Delete" }));
+        BooksActionCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Insert", "Update", "Delete", "Add Genre" }));
 
         jLabel2.setText("ID");
 
@@ -109,6 +111,8 @@ public class Books extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setText("Genre");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,9 +150,16 @@ public class Books extends javax.swing.JDialog {
                 .addComponent(BooksSeeButton)
                 .addGap(232, 232, 232))
             .addGroup(layout.createSequentialGroup()
-                .addGap(117, 117, 117)
-                .addComponent(BooksExecuteButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(115, 115, 115)
+                        .addComponent(BooksExecuteButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addGap(40, 40, 40)
+                        .addComponent(genreCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(599, 599, 599))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,9 +198,17 @@ public class Books extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel1)
+                        .addGap(11, 11, 11))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(genreCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addComponent(BooksExecuteButton)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         pack();
@@ -205,15 +224,18 @@ public class Books extends javax.swing.JDialog {
                 ArrayList<String> editorial;
                 ArrayList<String> score;
                 ArrayList<String> author;
+                ArrayList<String> genre;
         try {
             edition = connectMysql.conexion.EditionList();
             editorial = connectMysql.conexion.editorialList();
             score = connectMysql.conexion.ScoreList();
             author = connectMysql.conexion.AuthorList();
+            genre = connectMysql.conexion.genreList();
             BooksEditionCB.removeAllItems();
             BooksScoreCB.removeAllItems();
             BooksEditorialCB.removeAllItems();
             BooksAuthorCB.removeAllItems();
+            genreCB.removeAllItems();
            for (String i: edition){
                
             BooksEditionCB.addItem(i);
@@ -227,6 +249,9 @@ public class Books extends javax.swing.JDialog {
            }
            for(String i: author){
                BooksAuthorCB.addItem(i);
+           }
+           for(String i: genre){
+               genreCB.addItem(i);
            }
         } catch (SQLException ex) {
             Logger.getLogger(Books.class.getName()).log(Level.SEVERE, null, ex);
@@ -279,6 +304,12 @@ public class Books extends javax.swing.JDialog {
                 int idBook = Integer.parseInt(BooksIdTF.getText());
                 connectMysql.conexion.RemoveBookAuthor(idBook);
                 connectMysql.conexion.RemoveBookUser(idBook, id_user);
+            }
+            
+            else if(BooksActionCB.getSelectedItem().equals("Add Genre")){
+                int idBook = Integer.parseInt(BooksIdTF.getText());
+                int idGenre = connectMysql.conexion.getGenreId(String.valueOf(genreCB.getSelectedItem()));
+                connectMysql.conexion.InsertGenrexBook(idGenre, idBook);
             }
             
         } catch (SQLException ex) {
@@ -354,7 +385,9 @@ public class Books extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> BooksScoreCB;
     private javax.swing.JButton BooksSeeButton;
     private javax.swing.JTextField BooksTitleTF;
+    private javax.swing.JComboBox<String> genreCB;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

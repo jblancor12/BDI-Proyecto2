@@ -51,6 +51,30 @@ public class conexion {
       return rs;
    }
     
+    public static int getGenreId(String pdescription) throws SQLException{
+      con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+      CallableStatement stmt = con.prepareCall("{ ? = call get_genre_id(?)}");
+         stmt.registerOutParameter(1, Types.INTEGER);
+         stmt.setString(2, pdescription);
+
+         stmt.execute();
+         
+         int rs =  stmt.getInt(1);
+         System.out.println(rs);
+      return rs;
+   }
+    
+    
+    public static void InsertGenrexBook(int pnid_genre, int pid_book)throws SQLException{   
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+        CallableStatement stmt = con.prepareCall("{ call insert_bookxgenre(?,?)}");
+         stmt.setInt(1,pnid_genre);
+         stmt.setInt(2,pid_book);
+    
+         stmt.execute();
+    }
+    
+    
     
     public static String getPassword(int pPassword) throws SQLException{
       con = (Connection) DriverManager.getConnection(urlPE, user, pass);
@@ -1004,6 +1028,35 @@ public class conexion {
     }
    
    
+   public static ArrayList genreList()throws SQLException{   
+
+        
+        
+        ArrayList editionList = new ArrayList();
+        
+        
+
+        con = (Connection) DriverManager.getConnection(urlPE, user, pass);
+
+        CallableStatement stmt = con.prepareCall("{ call show_genre()}");
+
+
+
+
+        stmt.executeQuery();
+        ResultSet r =(ResultSet) stmt.getResultSet();
+        while(r.next()){
+                 
+              
+               editionList.add(r.getString("description"));
+                
+             }
+        
+
+        return editionList;
+    }
+   
+   
    
    
    
@@ -1575,6 +1628,7 @@ public class conexion {
                  
              }
     return res;
+
     }
     
     
